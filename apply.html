@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apply — POLIS · Pi Lambda Sigma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream:    #ede9df;
+      --cream-2:  #e6e1d6;
+      --navy:     #162040;
+      --navy-mid: #1e2e54;
+      --gold:     #b8922a;
+      --gold-lt:  #d4a83a;
+      --white:    #faf9f6;
+      --text:     #2a3555;
+      --muted:    #6b7591;
+      --border:   #d5cec0;
+      --ff-serif: 'Playfair Display', Georgia, serif;
+      --ff-body:  'EB Garamond', Georgia, serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--text); font-family: var(--ff-body); font-size: 18px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .label { display: flex; align-items: center; justify-content: center; gap: 14px; font-family: var(--ff-body); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+    .label::before, .label::after { content: ''; display: block; width: 44px; height: 1px; background: var(--gold); opacity: .7; }
+    .label-left { justify-content: flex-start; }
+    .label-left::before { display: none; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* NAV */
+    #announce { background: var(--navy); color: #b0bbd4; font-family: var(--ff-body); font-size: 13.5px; letter-spacing: .04em; padding: 10px 20px; text-align: center; }
+    #announce a { color: var(--gold-lt); border-bottom: 1px solid transparent; transition: border-color .2s; }
+    #announce a:hover { border-color: var(--gold-lt); }
+    #nav { position: sticky; top: 0; z-index: 100; background: var(--cream); border-bottom: 1px solid var(--border); padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 66px; transition: box-shadow .3s; }
+    #nav.scrolled { box-shadow: 0 2px 20px rgba(22,32,64,.08); }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo-mark { width: 38px; height: 38px; border: 1.5px dashed var(--border); display: flex; align-items: center; justify-content: center; font-size: 7px; letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
+    .nav-wordmark { font-family: var(--ff-body); font-size: 16px; letter-spacing: .22em; text-transform: uppercase; color: var(--navy); font-weight: 500; }
+    .nav-links { display: flex; align-items: center; gap: 34px; list-style: none; }
+    .nav-links a { font-family: var(--ff-body); font-size: 15px; color: var(--text); letter-spacing: .03em; opacity: .85; transition: opacity .2s, color .2s; }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--navy); }
+    .nav-links a.active { border-bottom: 1.5px solid var(--gold); padding-bottom: 1px; }
+    .nav-links .nav-apply { font-weight: 500; color: var(--navy); opacity: 1; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+    .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: var(--navy); transition: .3s; }
+    .nav-mobile-menu { display: none; position: fixed; top: 66px; left: 0; right: 0; background: var(--cream); border-bottom: 1px solid var(--border); padding: 20px 24px; z-index: 99; flex-direction: column; }
+    .nav-mobile-menu.open { display: flex; }
+    .nav-mobile-menu a { font-family: var(--ff-body); font-size: 17px; color: var(--navy); padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .nav-mobile-menu a:last-child { border-bottom: none; }
+
+    /* PAGE HERO */
+    .page-hero { padding: 72px 24px 64px; text-align: center; border-bottom: 1px solid var(--border); }
+    .page-hero-headline { font-family: var(--ff-serif); font-size: clamp(38px, 5vw, 62px); font-weight: 400; color: var(--navy); margin: 16px 0 18px; line-height: 1.15; }
+    .page-hero-headline em { font-style: italic; color: var(--gold); }
+    .page-hero-desc { font-size: 17px; color: var(--text); opacity: .8; max-width: 580px; margin: 0 auto; line-height: 1.7; }
+
+    /* CONTENT */
+    .page-content { max-width: 1100px; margin: 0 auto; padding: 72px 24px; }
+    .page-content-sm { max-width: 760px; margin: 0 auto; padding: 72px 24px; }
+    .section-title { font-family: var(--ff-serif); font-size: clamp(26px, 3vw, 36px); font-weight: 400; color: var(--navy); margin-bottom: 32px; }
+    .section-title em { font-style: italic; color: var(--gold); }
+
+    /* CARDS */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .card { background: var(--cream); padding: 36px 32px; transition: background .2s; }
+    .card:hover { background: var(--white); }
+    .card-label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    .card-title { font-family: var(--ff-serif); font-size: 20px; color: var(--navy); margin-bottom: 10px; }
+    .card-body { font-size: 15.5px; color: var(--text); opacity: .85; line-height: 1.6; }
+
+    /* PERSON CARD */
+    .person-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 32px; }
+    .person-card { text-align: center; }
+    .person-avatar { width: 100px; height: 100px; border-radius: 50%; background: var(--cream-2); border: 1px solid var(--border); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 8px; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+    .person-name { font-family: var(--ff-serif); font-size: 18px; color: var(--navy); margin-bottom: 4px; }
+    .person-role { font-size: 14px; color: var(--muted); }
+    .person-org { font-size: 13px; color: var(--gold); margin-top: 2px; font-style: italic; }
+
+    /* TABLE */
+    .styled-table { width: 100%; border-collapse: collapse; font-size: 15.5px; }
+    .styled-table th { font-family: var(--ff-body); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: left; font-weight: 500; }
+    .styled-table td { padding: 18px 16px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+    .styled-table tr:hover td { background: rgba(255,255,255,.5); }
+
+    /* EVENTS */
+    .event-item { display: flex; align-items: center; gap: 40px; padding: 28px 0; border-bottom: 1px solid var(--border); transition: padding-left .2s; cursor: pointer; }
+    .event-item:first-child { border-top: 1px solid var(--border); }
+    .event-item:hover { padding-left: 8px; }
+    .event-date { min-width: 52px; text-align: center; }
+    .event-date .month { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+    .event-date .day { font-family: var(--ff-serif); font-size: 36px; color: var(--navy); line-height: 1; }
+    .event-body { flex: 1; }
+    .event-name { font-family: var(--ff-serif); font-size: 20px; color: var(--navy); margin-bottom: 4px; }
+    .event-meta { font-size: 14px; color: var(--muted); }
+    .event-tag { font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border); padding: 3px 10px; white-space: nowrap; }
+    .event-arrow { color: var(--muted); font-size: 20px; transition: transform .2s, color .2s; }
+    .event-item:hover .event-arrow { transform: translateX(4px); color: var(--navy); }
+
+    /* APPLY FORM */
+    .form-group { margin-bottom: 28px; }
+    .form-label { display: block; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--navy); margin-bottom: 8px; font-weight: 500; }
+    .form-input, .form-select, .form-textarea { width: 100%; padding: 13px 16px; font-family: var(--ff-body); font-size: 16px; color: var(--text); background: var(--white); border: 1px solid var(--border); outline: none; transition: border-color .2s; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--navy); }
+    .form-textarea { resize: vertical; min-height: 120px; }
+    .form-select { appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7591' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: #fff; font-family: var(--ff-body); font-size: 15.5px; letter-spacing: .03em; padding: 14px 28px; border: none; cursor: pointer; transition: background .2s, transform .15s; }
+    .btn-primary:hover { background: var(--navy-mid); transform: translateY(-1px); }
+
+    /* FOOTER */
+    #footer { border-top: 1px solid var(--border); padding: 56px 24px 32px; text-align: center; }
+    .footer-logo-ring { width: 60px; height: 60px; border: 1.5px dashed var(--border); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 7px; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+    .footer-wordmark { font-family: var(--ff-body); font-size: 18px; letter-spacing: .28em; text-transform: uppercase; color: var(--navy); margin-bottom: 6px; }
+    .footer-sub { font-size: 14px; color: var(--muted); margin-bottom: 32px; }
+    .footer-nav { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; margin-bottom: 44px; }
+    .footer-nav a { font-size: 14.5px; color: var(--text); opacity: .75; transition: opacity .2s; }
+    .footer-nav a:hover { opacity: 1; }
+    .footer-copy { font-size: 13px; color: var(--muted); font-style: italic; border-top: 1px solid var(--border); padding-top: 24px; }
+
+    /* FADE */
+    .fade-up { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.delay-1 { transition-delay: .1s; }
+    .fade-up.delay-2 { transition-delay: .2s; }
+    .fade-up.delay-3 { transition-delay: .3s; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="announce">Fall 2026 recruitment is open through September 14 &mdash; <a href="apply.html">apply now.</a></div>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark">Logo<br>Here</div>
+    <span class="nav-wordmark">POLIS</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="network.html" >Network</a></li>
+    <li><a href="fellows.html" >Fellows</a></li>
+    <li><a href="events.html" >Events</a></li>
+    <li><a href="periodical.html" >Periodical</a></li>
+    <li><a href="journal.html" >Journal</a></li>
+    <li><a href="apply.html" class="nav-apply active">Apply</a></li>
+  </ul>
+  <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="nav-mobile-menu" id="mobileMenu">
+  <a href="network.html">Network</a>
+  <a href="fellows.html">Fellows</a>
+  <a href="events.html">Events</a>
+  <a href="periodical.html">Periodical</a>
+  <a href="journal.html">Journal</a>
+  <a href="apply.html">Apply</a>
+</div>
+
+<section class="page-hero">
+  <div class="label fade-up">Fall 2026 Recruitment</div>
+  <h1 class="page-hero-headline fade-up delay-1">Apply to <em>POLIS.</em></h1>
+  <p class="page-hero-desc fade-up delay-2">Applications for the Fall 2026 pledge class are open through September 14. We admit a small, selective cohort each semester.</p>
+</section>
+
+<div style="display:grid; grid-template-columns:1fr 340px; gap:64px; max-width:1000px; margin:0 auto; padding:72px 24px; align-items:start; flex-wrap:wrap">
+  <div class="fade-up">
+    <div class="label label-left" style="margin-bottom:32px">Application</div>
+    <div class="form-group">
+      <div class="form-row">
+        <div><label class="form-label">First Name</label><input class="form-input" type="text" placeholder="Jane" /></div>
+        <div><label class="form-label">Last Name</label><input class="form-input" type="text" placeholder="Smith" /></div>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Penn Email</label><input class="form-input" type="email" placeholder="janesmith@sas.upenn.edu" /></div>
+    <div class="form-group">
+      <div class="form-row">
+        <div><label class="form-label">School</label><select class="form-select"><option value="">Select school</option><option>College of Arts &amp; Sciences</option><option>Wharton</option><option>Engineering</option><option>Nursing</option></select></div>
+        <div><label class="form-label">Graduation Year</label><select class="form-select"><option value="">Select year</option><option>2027</option><option>2028</option><option>2029</option></select></div>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Major(s)</label><input class="form-input" type="text" placeholder="Economics, Political Science" /></div>
+    <div class="form-group"><label class="form-label">Why POLIS? (250 words max)</label><textarea class="form-textarea" placeholder="Tell us what draws you to a career in government or public service, and why you want to be part of this cohort."></textarea></div>
+    <div class="form-group"><label class="form-label">Relevant Experience (optional)</label><textarea class="form-textarea" placeholder="Internships, research, campaigns, student government, or anything else relevant." style="min-height:90px"></textarea></div>
+    <button class="btn-primary">Submit Application &nbsp;&#8594;</button>
+    <p style="font-size:13px; color:var(--muted); margin-top:16px">Applications close September 14, 2026. You will hear back within two weeks.</p>
+  </div>
+
+  <div class="fade-up delay-2" style="padding:36px 32px; border:1px solid var(--border); background:var(--white)">
+    <div style="font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:20px">What to expect</div>
+    <div style="font-family:var(--ff-serif); font-size:16px; color:var(--navy); margin-bottom:12px">Timeline</div>
+    <div style="font-size:14.5px; color:var(--text); line-height:1.8; margin-bottom:28px; opacity:.85">
+      <div>Sep 14 &mdash; Applications close</div>
+      <div>Sep 16&ndash;20 &mdash; Info sessions</div>
+      <div>Sep 22&ndash;28 &mdash; Interviews</div>
+      <div>Oct 1 &mdash; Decisions sent</div>
+    </div>
+    <div style="font-family:var(--ff-serif); font-size:16px; color:var(--navy); margin-bottom:12px">Who should apply</div>
+    <p style="font-size:14.5px; color:var(--text); line-height:1.7; opacity:.85; margin-bottom:28px">Any Penn undergraduate interested in a career in government, law, diplomacy, or public policy. All schools and majors welcome. No prior experience required.</p>
+    <div style="font-family:var(--ff-serif); font-size:16px; color:var(--navy); margin-bottom:12px">Questions?</div>
+    <p style="font-size:14.5px; color:var(--text); opacity:.85">Email us at <a href="mailto:polis@sas.upenn.edu" style="color:var(--gold); border-bottom:1px solid var(--gold)">polis@sas.upenn.edu</a></p>
+  </div>
+</div>
+
+<footer id="footer">
+  <div class="footer-logo-ring">Logo<br>Here</div>
+  <div class="footer-wordmark">POLIS</div>
+  <div class="footer-sub">Pi Lambda Sigma &middot; University of Pennsylvania</div>
+  <nav class="footer-nav">
+    <a href="network.html">Network</a>
+    <a href="fellows.html">Fellows</a>
+    <a href="events.html">Events</a>
+    <a href="periodical.html">Periodical</a>
+    <a href="journal.html">Journal</a>
+    <a href="apply.html">Apply</a>
+  </nav>
+  <div class="footer-copy"><em>&copy; Pi Lambda Sigma &middot; University of Pennsylvania &middot; 2026</em></div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 10));
+  document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('open'));
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const obs = new IntersectionObserver((entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }), { threshold: 0.1 });
+  fadeEls.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
