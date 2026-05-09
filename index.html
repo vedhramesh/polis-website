@@ -159,28 +159,8 @@
       user-select: none;
     }
     #hero > *:not(.hero-capitol) { position: relative; z-index: 1; }
-    .hero-logo-ring {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      border: 1.5px dashed var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 36px;
-      font-size: 9px;
-      letter-spacing: .1em;
-      color: var(--muted);
-      text-transform: uppercase;
-      background: repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 4px,
-        rgba(0,0,0,.025) 4px,
-        rgba(0,0,0,.025) 8px
-      );
-    }
     .hero-label { margin-bottom: 36px; }
+
     /* ─── HERO WORD REVEAL ─── */
     .hw {
       display: inline-block;
@@ -194,7 +174,7 @@
     }
     .hero-headline {
       font-family: var(--ff-serif);
-      font-size: clamp(38px, 5vw, 64px);
+      font-size: clamp(28px, 3.5vw, 48px);
       font-weight: 400;
       line-height: 1.18;
       color: var(--navy);
@@ -264,18 +244,16 @@
     }
     .members-title em { font-style: italic; color: var(--gold); }
 
-    /* Carousel — infinite marquee */
+    /* Carousel — infinite JS scroll */
     .logo-carousel-wrap {
       position: relative;
       overflow-x: clip;
       margin-bottom: 0;
       padding: 52px 0 28px;
-      margin-top: -36px; /* pull it up closer to the heading */
+      margin-top: -36px;
       -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
       mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
     }
-    .logo-carousel-wrap:hover .logo-carousel { }
-
     .logo-carousel {
       display: flex;
       align-items: center;
@@ -283,7 +261,6 @@
       width: max-content;
       will-change: transform;
     }
-
     .logo-item {
       display: flex;
       flex-direction: column;
@@ -313,7 +290,6 @@
       transition: opacity .2s, transform .2s;
       z-index: 10;
     }
-    /* tooltip arrow */
     .logo-item::before {
       content: '';
       position: absolute;
@@ -333,7 +309,6 @@
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
-
     .logo-circle {
       width: 130px;
       height: 130px;
@@ -643,23 +618,6 @@
       padding: 56px 24px 32px;
       text-align: center;
     }
-    .footer-logo-ring {
-      width: 60px;
-      height: 60px;
-      border: 1.5px dashed var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 16px;
-      font-size: 7px;
-      letter-spacing: .08em;
-      color: var(--muted);
-      text-transform: uppercase;
-      background: repeating-linear-gradient(
-        -45deg, transparent, transparent 3px,
-        rgba(0,0,0,.025) 3px, rgba(0,0,0,.025) 6px
-      );
-    }
     .footer-wordmark {
       font-family: var(--ff-body);
       font-size: 18px;
@@ -727,10 +685,8 @@
       .stat-item:nth-child(3), .stat-item:nth-child(4) { border-top: 1px solid var(--border); }
       .features-grid { grid-template-columns: 1fr; }
       .feature-card { margin: 0; }
-      .feature-card.featured { margin: 0; }
-      .logo-carousel { gap: 16px; padding: 0 16px; }
+      .logo-carousel { gap: 16px; }
       .logo-circle { width: 70px; height: 70px; }
-      .logo-item.featured .logo-circle { width: 88px; height: 88px; }
       .join-form { flex-direction: column; }
       .join-form input { border-right: 1px solid var(--border); border-bottom: none; }
       .event-item { gap: 20px; }
@@ -756,7 +712,7 @@
 
 <!-- ANNOUNCEMENT BAR -->
 <div id="announce">
-  Fall 2026 recruitment is open through September 14 &mdash; <a href="#apply">apply now.</a>
+  Fall 2026 recruitment is open through September 8 &mdash; <a href="#apply">apply now.</a>
 </div>
 
 <!-- NAVBAR -->
@@ -790,9 +746,6 @@
 
 <!-- HERO -->
 <section id="hero">
-
-  <!-- Capitol building photo overlay -->
-  <!-- Drop your image file into the same folder as index.html and name it capitol.jpg (or update the src below) -->
   <img class="hero-capitol" src="capitol.jpg" alt="" aria-hidden="true" />
   <img src="logo.png" alt="POLIS" style="width:110px;height:110px;object-fit:contain;display:block;margin:0 auto 36px;" />
   <div class="label hero-label">Pi Lambda Sigma &middot; University of Pennsylvania</div>
@@ -801,19 +754,19 @@
     <span class="hw" style="--d:1">would</span>
     <span class="hw" style="--d:2">happen</span>
     <span class="hw" style="--d:3">if</span>
-    <span class="hw" style="--d:4">we</span>
+    <span class="hw" style="--d:4">we</span><br>
     <span class="hw" style="--d:5">gathered</span>
-    <em><span class="hw" style="--d:6">future</span><br>
+    <em><span class="hw" style="--d:6">future</span>
     <span class="hw" style="--d:7">government</span>
-    <span class="hw" style="--d:8">leaders</span></em>
+    <span class="hw" style="--d:8">leaders</span></em><br>
     <span class="hw" style="--d:9">in</span>
     <span class="hw" style="--d:10">the</span>
     <span class="hw" style="--d:11">same</span>
-    <span class="hw" style="--d:12">room,</span><br>
+    <span class="hw" style="--d:12">room,</span>
     <span class="hw" style="--d:13">years</span>
     <span class="hw" style="--d:14">before</span>
     <span class="hw" style="--d:15">they</span>
-    <span class="hw" style="--d:16">meet</span>
+    <span class="hw" style="--d:16">meet</span><br>
     <span class="hw" style="--d:17">in</span>
     <span class="hw" style="--d:18">Washington?</span>
   </h1>
@@ -821,7 +774,7 @@
     Pi Lambda Sigma (POLIS) is the University of Pennsylvania's premier nonpartisan pre-professional government society, open to all majors and schools and designed for anyone interested in a career in government or public service. We host speaker events, networking events, career workshops, and many fun social gatherings!
   </p>
   <div class="hero-ctas fade-up delay-2">
-    <a href="#apply" class="btn-primary">Apply for Fall 2026 &nbsp;&#8594;</a>
+    <a href="apply.html" class="btn-primary">Apply for Fall 2026 &nbsp;&#8594;</a>
     <a href="#about" class="btn-ghost">Learn more</a>
   </div>
 </section>
@@ -886,7 +839,6 @@
   <div class="features-grid fade-up delay-3">
     <div class="feature-card">
       <div class="feature-icon">
-        <!-- Lock icon -->
         <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       </div>
       <div class="feature-title">Speaker Events</div>
@@ -894,7 +846,6 @@
     </div>
     <div class="feature-card">
       <div class="feature-icon">
-        <!-- People icon -->
         <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       </div>
       <div class="feature-title">Networking</div>
@@ -902,7 +853,6 @@
     </div>
     <div class="feature-card">
       <div class="feature-icon">
-        <!-- Briefcase icon -->
         <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="12"/><path d="M2 12h20"/></svg>
       </div>
       <div class="feature-title">Career Development</div>
@@ -985,15 +935,12 @@
     <button type="button">Subscribe</button>
   </div>
   <div class="social-links fade-up delay-4">
-    <!-- Instagram -->
     <a href="#" class="social-link" aria-label="Instagram">
       <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
     </a>
-    <!-- LinkedIn -->
     <a href="#" class="social-link" aria-label="LinkedIn">
       <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
     </a>
-    <!-- Facebook -->
     <a href="#" class="social-link" aria-label="Facebook">
       <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
     </a>
@@ -1047,41 +994,6 @@
   }, { threshold: 0.12 });
   fadeEls.forEach(el => observer.observe(el));
 
-  // Stat counter animation — easing like a speedometer
-  function animateCounter(el) {
-    const target = parseInt(el.dataset.target);
-    const suffix = el.dataset.suffix || '';
-    const duration = 1800;
-    const start = performance.now();
-
-    // Ease-out cubic — fast start, decelerates into final value
-    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-    function tick(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = easeOutCubic(progress);
-      const current = Math.round(eased * target);
-      el.textContent = current + suffix;
-      if (progress < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
-  const statObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting && e.target.dataset.target) {
-        animateCounter(e.target);
-        statObserver.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  document.querySelectorAll('.stat-num[data-target]').forEach(el => {
-    el.textContent = '0' + (el.dataset.suffix || '');
-    statObserver.observe(el);
-  });
-
   // Infinite logo carousel
   const track = document.getElementById('logoCarousel');
   let pos = 0;
@@ -1097,6 +1009,36 @@
     requestAnimationFrame(tickCarousel);
   }
   requestAnimationFrame(tickCarousel);
+
+  // Stat counter animation
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1800;
+    const start = performance.now();
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutCubic(progress);
+      const current = Math.round(eased * target);
+      el.textContent = current + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && e.target.dataset.target) {
+        animateCounter(e.target);
+        statObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+    el.textContent = '0' + (el.dataset.suffix || '');
+    statObserver.observe(el);
+  });
 
   // Subscribe form
   const subscribeBtn = document.querySelector('.join-form button');
