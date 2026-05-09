@@ -138,6 +138,22 @@
       .form-row { grid-template-columns: 1fr; }
     }
   </style>
+  <style>
+    body { opacity: 0; transition: opacity 0.25s ease; }
+    body.loaded { opacity: 1; }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => document.body.classList.add("loaded"));
+    document.addEventListener("click", e => {
+      const a = e.target.closest("a");
+      if (!a) return;
+      const href = a.getAttribute("href");
+      if (!href || href.startsWith("http") || href.startsWith("#") || href.startsWith("mailto")) return;
+      e.preventDefault();
+      document.body.style.opacity = "0";
+      setTimeout(() => window.location.href = href, 250);
+    });
+  </script>
 </head>
 <body>
 
