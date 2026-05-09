@@ -158,6 +158,20 @@
       setTimeout(() => window.location.href = href, 200);
     });
   </script>
+
+  <style>
+    .nav-links a { position: relative; }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 1.5px;
+      background: #b8922a;
+      transition: width 0.28s ease;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active::after { width: 100%; }
+  </style>
 </head>
 <body>
 
