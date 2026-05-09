@@ -146,7 +146,7 @@
       position: relative;
       overflow: hidden;
     }
-.hero-capitol {
+    .hero-capitol {
       position: absolute;
       top: 0;
       left: 0;
@@ -194,7 +194,7 @@
     }
     .hero-headline {
       font-family: var(--ff-serif);
-      font-size: clamp(28px, 3.5vw, 48px);
+      font-size: clamp(38px, 5vw, 64px);
       font-weight: 400;
       line-height: 1.18;
       color: var(--navy);
@@ -274,18 +274,14 @@
       -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
       mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
     }
-    .logo-carousel-wrap:hover .logo-carousel { animation-play-state: paused; }
+    .logo-carousel-wrap:hover .logo-carousel { }
 
     .logo-carousel {
       display: flex;
       align-items: center;
       gap: 36px;
       width: max-content;
-      animation: marquee 28s linear infinite;
-    }
-    @keyframes marquee {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+      will-change: transform;
     }
 
     .logo-item {
@@ -760,7 +756,7 @@
 
 <!-- ANNOUNCEMENT BAR -->
 <div id="announce">
-  Fall 2026 recruitment is open through September 8 &mdash; <a href="#apply">apply now.</a>
+  Fall 2026 recruitment is open through September 14 &mdash; <a href="#apply">apply now.</a>
 </div>
 
 <!-- NAVBAR -->
@@ -800,24 +796,24 @@
   <img class="hero-capitol" src="capitol.jpg" alt="" aria-hidden="true" />
   <img src="logo.png" alt="POLIS" style="width:110px;height:110px;object-fit:contain;display:block;margin:0 auto 36px;" />
   <div class="label hero-label">Pi Lambda Sigma &middot; University of Pennsylvania</div>
-<h1 class="hero-headline">
+  <h1 class="hero-headline">
     <span class="hw" style="--d:0">What</span>
     <span class="hw" style="--d:1">would</span>
     <span class="hw" style="--d:2">happen</span>
     <span class="hw" style="--d:3">if</span>
-    <span class="hw" style="--d:4">we</span><br>
+    <span class="hw" style="--d:4">we</span>
     <span class="hw" style="--d:5">gathered</span>
-    <em><span class="hw" style="--d:6">future</span>
+    <em><span class="hw" style="--d:6">future</span><br>
     <span class="hw" style="--d:7">government</span>
-    <span class="hw" style="--d:8">leaders</span></em><br>
+    <span class="hw" style="--d:8">leaders</span></em>
     <span class="hw" style="--d:9">in</span>
     <span class="hw" style="--d:10">the</span>
     <span class="hw" style="--d:11">same</span>
-    <span class="hw" style="--d:12">room,</span>
+    <span class="hw" style="--d:12">room,</span><br>
     <span class="hw" style="--d:13">years</span>
     <span class="hw" style="--d:14">before</span>
     <span class="hw" style="--d:15">they</span>
-    <span class="hw" style="--d:16">meet</span><br>
+    <span class="hw" style="--d:16">meet</span>
     <span class="hw" style="--d:17">in</span>
     <span class="hw" style="--d:18">Washington?</span>
   </h1>
@@ -1085,6 +1081,22 @@
     el.textContent = '0' + (el.dataset.suffix || '');
     statObserver.observe(el);
   });
+
+  // Infinite logo carousel
+  const track = document.getElementById('logoCarousel');
+  let pos = 0;
+  let paused = false;
+  track.parentElement.addEventListener('mouseenter', () => paused = true);
+  track.parentElement.addEventListener('mouseleave', () => paused = false);
+  function tickCarousel() {
+    if (!paused) {
+      pos += 0.6;
+      if (pos >= track.scrollWidth / 2) pos = 0;
+      track.style.transform = `translateX(-${pos}px)`;
+    }
+    requestAnimationFrame(tickCarousel);
+  }
+  requestAnimationFrame(tickCarousel);
 
   // Subscribe form
   const subscribeBtn = document.querySelector('.join-form button');
