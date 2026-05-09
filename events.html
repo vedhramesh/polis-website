@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="logo.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Events — POLIS · Pi Lambda Sigma</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -157,7 +156,7 @@
 </head>
 <body>
 
-<div id="announce">Fall 2026 recruitment is open through September 8 &mdash; <a href="https://docs.google.com/forms/d/e/1FAIpQLSczFYKmAfR-e9em0fsbexaH1WnpUkUtWCl-EkOU3zT4IGx6vA/viewform">apply now.</a></div>
+<div id="announce">Fall 2026 recruitment is open through September 14 &mdash; <a href="https://docs.google.com/forms/d/e/1FAIpQLSczFYKmAfR-e9em0fsbexaH1WnpUkUtWCl-EkOU3zT4IGx6vA/viewform">apply now.</a></div>
 
 <nav id="nav">
   <a href="index.html" class="nav-logo">
@@ -190,17 +189,12 @@
 </section>
 
 <div class="page-content-sm">
-  <div class="fade-up" style="margin-bottom:16px">
-    <span style="font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold)">Fall 2026</span>
+  <div id="events-loading" style="text-align:center;padding:48px 0;font-family:var(--ff-body);font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">
+    Loading events&hellip;
   </div>
-  <div class="fade-up delay-1">
-    <div class="event-item"><div class="event-date"><div class="month">Sep</div><div class="day">16</div></div><div class="event-body"><div class="event-name">Fall Recruitment Info Session</div><div class="event-meta">Open to all Penn students &middot; Huntsman Hall</div></div><div class="event-tag">Open</div><div class="event-arrow">&#8594;</div></div>
-    <div class="event-item"><div class="event-date"><div class="month">Sep</div><div class="day">22</div></div><div class="event-body"><div class="event-name">Coffee Chat with POLIS Fellows</div><div class="event-meta">Open to all Penn students &middot; Van Pelt Café</div></div><div class="event-tag">Open</div><div class="event-arrow">&#8594;</div></div>
-    <div class="event-item"><div class="event-date"><div class="month">Oct</div><div class="day">4</div></div><div class="event-body"><div class="event-name">Off-the-Record Speaker Dinner</div><div class="event-meta">Members only &middot; Location TBA</div></div><div class="event-tag">Members</div><div class="event-arrow">&#8594;</div></div>
-    <div class="event-item"><div class="event-date"><div class="month">Oct</div><div class="day">18</div></div><div class="event-body"><div class="event-name">Federal Hiring Workshop</div><div class="event-meta">Members only &middot; Perry World House</div></div><div class="event-tag">Members</div><div class="event-arrow">&#8594;</div></div>
-    <div class="event-item"><div class="event-date"><div class="month">Nov</div><div class="day">7</div></div><div class="event-body"><div class="event-name">Fall Symposium</div><div class="event-meta">Members only &middot; Annenberg School</div></div><div class="event-tag">Members</div><div class="event-arrow">&#8594;</div></div>
-    <div class="event-item"><div class="event-date"><div class="month">Nov</div><div class="day">21</div></div><div class="event-body"><div class="event-name">Alumni Networking Reception</div><div class="event-meta">Members only &middot; Houston Hall</div></div><div class="event-tag">Members</div><div class="event-arrow">&#8594;</div></div>
-    <div class="event-item"><div class="event-date"><div class="month">Dec</div><div class="day">5</div></div><div class="event-body"><div class="event-name">End-of-Semester Dinner</div><div class="event-meta">Members only &middot; Location TBA</div></div><div class="event-tag">Members</div><div class="event-arrow">&#8594;</div></div>
+  <div id="events-list" style="display:none"></div>
+  <div id="events-empty" style="display:none;text-align:center;padding:48px 0;font-family:var(--ff-body);font-size:16px;color:var(--muted)">
+    No upcoming events. Check back soon.
   </div>
 
   <hr class="divider" style="margin: 64px 0 40px"/>
@@ -239,6 +233,70 @@
   const fadeEls = document.querySelectorAll('.fade-up');
   const obs = new IntersectionObserver((entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }), { threshold: 0.1 });
   fadeEls.forEach(el => obs.observe(el));
+
+  // ── GOOGLE CALENDAR FETCH ─────────────────────────────────────────────────
+  const CAL_ID  = 'upennpolis@gmail.com';
+  const API_KEY = 'AIzaSyBdcih0xSajHcTmV6E5u-PvT7gcq5Ruk58';
+  const MONTHS  = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  async function loadEvents() {
+    const now = new Date().toISOString();
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CAL_ID)}/events?key=${API_KEY}&timeMin=${now}&orderBy=startTime&singleEvents=true&maxResults=30`;
+
+    try {
+      const res  = await fetch(url);
+      const data = await res.json();
+
+      document.getElementById('events-loading').style.display = 'none';
+
+      if (!data.items || data.items.length === 0) {
+        document.getElementById('events-empty').style.display = 'block';
+        return;
+      }
+
+      const list = document.getElementById('events-list');
+      list.style.display = 'block';
+
+      data.items.forEach(event => {
+        const start    = new Date(event.start.dateTime || event.start.date);
+        const month    = MONTHS[start.getMonth()];
+        const day      = start.getDate();
+        const title    = event.summary || 'Untitled Event';
+        const location = event.location || '';
+        const desc     = (event.description || '').toLowerCase();
+        const link     = event.htmlLink || '#';
+
+        // Tag logic: if description contains "open" → Open, else Members
+        const isOpen   = desc.includes('open');
+        const tag      = isOpen ? 'Open' : 'Members';
+
+        // Meta line: location if available
+        const meta     = location || (isOpen ? 'Open to all Penn students' : 'Members only');
+
+        list.innerHTML += `
+          <a href="${link}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block">
+            <div class="event-item">
+              <div class="event-date">
+                <div class="month">${month}</div>
+                <div class="day">${day}</div>
+              </div>
+              <div class="event-body">
+                <div class="event-name">${title}</div>
+                <div class="event-meta">${meta}</div>
+              </div>
+              <div class="event-tag">${tag}</div>
+              <div class="event-arrow">&#8594;</div>
+            </div>
+          </a>`;
+      });
+
+    } catch (err) {
+      document.getElementById('events-loading').innerHTML =
+        '<span style="color:var(--muted)">Could not load events. <a href="https://calendar.google.com/calendar/u/0?cid=upennpolis@gmail.com" style="color:var(--gold)">View on Google Calendar →</a></span>';
+    }
+  }
+
+  loadEvents();
 </script>
 </body>
 </html>
