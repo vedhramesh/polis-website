@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="logo.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>POLIS — Pi Lambda Sigma · University of Pennsylvania</title>
+  <link rel="icon" type="image/png" href="logo.png" />
   <meta name="description" content="Pi Lambda Sigma is the University of Pennsylvania's premier nonpartisan pre-professional government society." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -784,8 +784,8 @@
 
 <!-- WHERE MEMBERS WORK -->
 <section id="members">
-  <div class="label fade-up">A Network Across Washington and Beyond</div>
-  <h2 class="members-title fade-up delay-1">Where our <em>Members Work</em></h2>
+  <div class="label fade-up">An Alumni Network Across Washington and Beyond</div>
+  <h2 class="members-title fade-up delay-1">Where our <em>Members Work.</em></h2>
 
   <div class="logo-carousel-wrap fade-up delay-2">
     <div class="logo-carousel" id="logoCarousel">
@@ -793,7 +793,7 @@
       <div class="logo-item" data-name="U.S. Department of State"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="U.S. Senate"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="Central Intelligence Agency"><div class="logo-circle">Logo<br>Here</div></div>
-      <div class="logo-item" data-name="U.S. Treasury"><div class="logo-circle">Logo<br>Here</div></div>
+      <div class="logo-item" data-name="National Security Council"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="McKinsey & Company"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="The Brookings Institution"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="U.S. House of Representatives"><div class="logo-circle">Logo<br>Here</div></div>
@@ -802,7 +802,7 @@
       <div class="logo-item" data-name="U.S. Department of State"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="U.S. Senate"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="Central Intelligence Agency"><div class="logo-circle">Logo<br>Here</div></div>
-      <div class="logo-item" data-name="U.S. Treasury"><div class="logo-circle">Logo<br>Here</div></div>
+      <div class="logo-item" data-name="National Security Council"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="McKinsey & Company"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="The Brookings Institution"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="U.S. House of Representatives"><div class="logo-circle">Logo<br>Here</div></div>
@@ -999,8 +999,10 @@
   const track = document.getElementById('logoCarousel');
   let pos = 0;
   let paused = false;
-  track.parentElement.addEventListener('mouseenter', () => paused = true);
-  track.parentElement.addEventListener('mouseleave', () => paused = false);
+  document.querySelectorAll('.logo-item').forEach(item => {
+    item.addEventListener('mouseenter', () => paused = true);
+    item.addEventListener('mouseleave', () => paused = false);
+  });
   function tickCarousel() {
     if (!paused) {
       pos += 0.6;
