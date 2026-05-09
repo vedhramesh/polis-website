@@ -199,14 +199,40 @@
 
   <hr class="divider" style="margin: 64px 0 40px"/>
 
-  <div class="label fade-up" style="margin-bottom:28px">Past Events</div>
+  <div class="label fade-up" style="margin-bottom:28px">Selected Past Events</div>
+
+  <!-- Image preview area — 4:3 aspect ratio -->
+  <div style="width:100%;position:relative;padding-bottom:75%;margin-bottom:0;">
+    <div id="event-preview" style="
+      position:absolute;inset:0;
+      border:1px solid var(--border);
+      background:var(--cream-2);
+      display:flex;align-items:center;justify-content:center;
+      overflow:hidden;transition:background .3s;
+    ">
+      <div id="event-preview-placeholder" style="
+        font-family:var(--ff-body);font-size:13px;letter-spacing:.12em;
+        text-transform:uppercase;color:var(--muted);text-align:center;
+      ">Hover over an event to see it</div>
+      <img id="event-preview-img" src="" alt="" style="
+        display:none;width:100%;height:100%;object-fit:cover;
+        position:absolute;inset:0;opacity:0;transition:opacity .3s;
+      " />
+    </div>
+  </div>
+
   <table class="styled-table fade-up delay-1">
-    <thead><tr><th>Date</th><th>Event</th><th>Speaker / Host</th></tr></thead>
+    <thead><tr><th>Date</th><th>Event</th></tr></thead>
     <tbody>
-      <tr><td>Apr 2026</td><td>Spring Symposium</td><td>Placeholder Speaker</td></tr>
-      <tr><td>Mar 2026</td><td>Security Clearance Workshop</td><td>Former DCSA Officer</td></tr>
-      <tr><td>Feb 2026</td><td>Off-the-Record Dinner</td><td>Placeholder Ambassador</td></tr>
-      <tr><td>Nov 2025</td><td>Fall Symposium</td><td>Placeholder Cabinet Official</td></tr>
+      <tr data-img=""><td>Apr 2026</td><td>POLIS '26 Formal</td></tr>
+      <tr data-img=""><td>Feb 2026</td><td>Princeton AI Envision Conference</td></tr>
+      <tr data-img=""><td>Feb 2026</td><td>POLIS Spring '26 Initiation</td></tr>
+      <tr data-img=""><td>Feb 2026</td><td>Guest Speaker: Dr. James Vreeland</td></tr>
+      <tr data-img=""><td>Nov 2025</td><td>POLIS Friendsgiving</td></tr>
+      <tr data-img=""><td>Nov 2025</td><td>Columbia &amp; Cornell Chapter Meetup</td></tr>
+      <tr data-img=""><td>Oct 2025</td><td>Alumni Series: UN Guest Speaker Laurie Phipps</td></tr>
+      <tr data-img=""><td>Oct 2025</td><td>Senior Career Panel</td></tr>
+      <tr data-img=""><td>Sep 2025</td><td>POLIS Fall '25 Initiation</td></tr>
     </tbody>
   </table>
 </div>
@@ -295,6 +321,43 @@
         '<span style="color:var(--muted)">Could not load events. <a href="https://calendar.google.com/calendar/u/0?cid=upennpolis@gmail.com" style="color:var(--gold)">View on Google Calendar →</a></span>';
     }
   }
+
+  // Past events image preview
+  const preview     = document.getElementById('event-preview');
+  const previewImg  = document.getElementById('event-preview-img');
+  const previewPH   = document.getElementById('event-preview-placeholder');
+
+  document.querySelectorAll('.styled-table tbody tr').forEach(row => {
+    row.style.cursor = 'default';
+    row.addEventListener('mouseenter', () => {
+      const src = row.dataset.img;
+      if (src) {
+        previewImg.src = src;
+        previewImg.style.display = 'block';
+        previewPH.style.display = 'none';
+        setTimeout(() => previewImg.style.opacity = '1', 10);
+      } else {
+        // placeholder — tint the preview box
+        preview.style.background = 'var(--cream-2)';
+        previewPH.textContent = row.querySelector('td:nth-child(2)').textContent;
+        previewPH.style.color = 'var(--navy)';
+        previewPH.style.fontSize = '15px';
+        previewPH.style.fontFamily = 'var(--ff-serif)';
+        previewImg.style.opacity = '0';
+        previewImg.style.display = 'none';
+        previewPH.style.display = 'block';
+      }
+    });
+    row.addEventListener('mouseleave', () => {
+      previewImg.style.opacity = '0';
+      setTimeout(() => { previewImg.style.display = 'none'; previewImg.src = ''; }, 300);
+      previewPH.textContent = 'Hover over an event to see it';
+      previewPH.style.color = 'var(--muted)';
+      previewPH.style.fontSize = '13px';
+      previewPH.style.fontFamily = 'var(--ff-body)';
+      previewPH.style.display = 'block';
+    });
+  });
 
   loadEvents();
 </script>
