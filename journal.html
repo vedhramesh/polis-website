@@ -279,5 +279,18 @@
   const obs = new IntersectionObserver((entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }), { threshold: 0.1 });
   fadeEls.forEach(el => obs.observe(el));
 </script>
+
+  <style>*, *::before, *::after { cursor: none !important; }</style>
+  <script>
+    (function() {
+      const cur = document.createElement('div');
+      cur.innerHTML = '<svg width="26" height="32" viewBox="0 0 26 32" xmlns="http://www.w3.org/2000/svg"><path d="M3 1 L3 23 L8 17.5 L12 27 L15.5 25.5 L11.5 16 L18 16 Z" fill="#b8922a" stroke="#b8922a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M3 1 L3 23 L8 17.5 L12 27 L15.5 25.5 L11.5 16 L18 16 Z" fill="#162040" stroke="#162040" stroke-width="0.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M3 1 L3 23 L8 17.5 L12 27 L15.5 25.5 L11.5 16 L18 16 Z" fill="none" stroke="#b8922a" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>';
+      cur.style.cssText = 'position:fixed;top:0;left:0;pointer-events:none;z-index:99999;transform-origin:3px 2px;will-change:transform;';
+      document.body.appendChild(cur);
+      document.addEventListener('mousemove', e => {
+        cur.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)';
+      });
+    })();
+  </script>
 </body>
 </html>
