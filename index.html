@@ -989,19 +989,23 @@
   const track = document.getElementById('logoCarousel');
   let pos = 0;
   let paused = false;
+  let halfWidth = 0;
   document.querySelectorAll('.logo-item').forEach(item => {
     item.addEventListener('mouseenter', () => paused = true);
     item.addEventListener('mouseleave', () => paused = false);
   });
   function tickCarousel() {
-    if (!paused) {
+    if (!paused && halfWidth > 0) {
       pos += 0.6;
-      if (pos >= track.scrollWidth / 2) pos = 0;
+      if (pos >= halfWidth) pos = 0;
       track.style.transform = `translateX(-${pos}px)`;
     }
     requestAnimationFrame(tickCarousel);
   }
-  requestAnimationFrame(tickCarousel);
+  window.addEventListener('load', () => {
+    halfWidth = track.scrollWidth / 2;
+    requestAnimationFrame(tickCarousel);
+  });
 
   // Stat counter animation
   function animateCounter(el) {
