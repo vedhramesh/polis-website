@@ -160,8 +160,14 @@
       user-select: none;
     }
     #hero > *:not(.hero-capitol) { position: relative; z-index: 1; }
-    .hero-label, .hero-headline, .hero-headline *, .hero-desc {
+    .hero-headline, .hero-headline * {
       text-shadow: 0 0 30px rgba(237,233,223,1), 0 0 60px rgba(237,233,223,1), 0 0 90px rgba(237,233,223,1), 0 0 140px rgba(237,233,223,0.95);
+    }
+    .hero-label, .hero-desc {
+      text-shadow: 0 0 20px rgba(237,233,223,1), 0 0 40px rgba(237,233,223,1), 0 0 70px rgba(237,233,223,1), 0 0 100px rgba(237,233,223,1), 0 0 160px rgba(237,233,223,1);
+      background: radial-gradient(ellipse at center, rgba(237,233,223,0.7) 0%, rgba(237,233,223,0.4) 50%, transparent 80%);
+      border-radius: 40px;
+      padding: 4px 16px;
     }
     .hero-label { margin-bottom: 36px; }
 
