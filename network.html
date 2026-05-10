@@ -181,9 +181,11 @@
 
     /* ─── ORG MAP ─── */
     .org-map-section {
-      padding: 16px 24px 64px;
+      padding: 16px 0 64px;
       overflow: hidden;
       position: relative;
+      display: flex;
+      justify-content: center;
     }
 
     #orgMap {
@@ -379,40 +381,21 @@
 
   <!-- Page transition -->
   <style>
-    #page-cover { position:fixed; inset:0; background:var(--cream); z-index:9999; pointer-events:none; opacity:0; transition:opacity 0.2s ease; }
-    #page-cover.visible { opacity:1; }
+    body { opacity: 0; transition: opacity 0.25s ease; }
+    body.loaded { opacity: 1; }
   </style>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const cover = document.createElement('div');
-      cover.id = 'page-cover';
-      document.body.prepend(cover);
-    });
+    document.addEventListener("DOMContentLoaded", () => document.body.classList.add("loaded"));
     document.addEventListener("click", e => {
       const a = e.target.closest("a");
       if (!a) return;
       const href = a.getAttribute("href");
       if (!href || href.startsWith("http") || href.startsWith("#") || href.startsWith("mailto")) return;
       e.preventDefault();
-      const cover = document.getElementById('page-cover');
-      cover.classList.add('visible');
-      setTimeout(() => window.location.href = href, 200);
+      document.body.style.opacity = "0";
+      setTimeout(() => window.location.href = href, 250);
     });
   </script>
-
-  <style>
-    .nav-links a { position: relative; }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 0;
-      width: 0; height: 1.5px;
-      background: #b8922a;
-      transition: width 0.28s ease;
-    }
-    .nav-links a:hover::after { width: 100%; }
-    .nav-links a.active::after { width: 100%; }
-  </style>
 </head>
 <body>
 
@@ -451,7 +434,7 @@
 <section class="page-hero">
   <div class="label fade-up">Network</div>
   <h1 class="page-hero-headline fade-up delay-1">Where our <em>members work.</em></h1>
-  <p class="page-hero-desc fade-up delay-2">POLIS Fellows are embedded across the federal government, the Hill, embassies, think tanks, and top consulting firms. Here's where we work.</p>
+  <p class="page-hero-desc fade-up delay-2">POLIS fellows are embedded across the federal government, the Hill, embassies, think tanks, and top consulting firms. Here's where we work.</p>
 </section>
 
 <!-- ORG MAP -->
@@ -467,7 +450,7 @@
 <div class="also-section fade-up">
   <div class="also-header">
     <div class="label">Beyond the Map</div>
-    <h2 class="also-headline">Also placing Fellows <em>across government.</em></h2>
+    <h2 class="also-headline">Also placing fellows <em>across government.</em></h2>
   </div>
   <div class="also-grid">
     <div class="also-col">
@@ -533,17 +516,6 @@
     <a href="journal.html">Journal</a>
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSczFYKmAfR-e9em0fsbexaH1WnpUkUtWCl-EkOU3zT4IGx6vA/viewform">Apply</a>
   </nav>
-  <div class="social-links" style="display:flex;justify-content:center;gap:14px;margin-bottom:32px">
-    <a href="https://www.instagram.com/polisupenn/" aria-label="Instagram">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
-    </a>
-    <a href="https://www.linkedin.com/company/pi-lambda-sigma-university-of-pennsylvania/" aria-label="LinkedIn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-    </a>
-    <a href="https://www.facebook.com/polisupenn/" aria-label="Facebook">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-    </a>
-  </div>
   <div class="footer-copy">
     <em>&copy; Pi Lambda Sigma &middot; University of Pennsylvania &middot; 2026</em>
   </div>
@@ -599,6 +571,27 @@
   map.style.width  = W  + 'px';
   map.style.height = Ht + 'px';
 
+  // Scale map to fit on mobile
+  function scaleMap() {
+    const available = window.innerWidth - 32;
+    if (available < W) {
+      const scale = available / W;
+      map.style.transform = `scale(${scale})`;
+      map.style.transformOrigin = 'top center';
+      map.parentElement.style.paddingBottom = (64 + Ht * (scale - 1)) + 'px';
+    } else {
+      map.style.transform = '';
+      map.parentElement.style.paddingBottom = '';
+    }
+  }
+  scaleMap();
+  window.addEventListener('resize', scaleMap);
+
+  // Tap vs hover hint text
+  const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  document.querySelector('.org-hint-text').textContent =
+    isTouchDevice ? 'Tap to explore' : 'Hover to explore';
+
   const items = REL.map(([rx, ry], i) => {
     const cx = CX + rx, cy = CY + ry;
     const el = document.createElement('div');
@@ -643,7 +636,9 @@
   const hint = document.getElementById('orgHint');
 
   items.forEach(({ el }, idx) => {
-    el.addEventListener('mouseenter', () => {
+    ['mouseenter', 'touchstart'].forEach(evt => {
+    el.addEventListener(evt, (e) => {
+      if (evt === 'touchstart') e.preventDefault();
       hint.classList.add('hidden');
       const resolved = resolvePositions(idx);
       items.forEach(({ el: other, cx, cy }, j) => {
@@ -651,6 +646,7 @@
         other.style.transform = (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1)
           ? `translate(${dx.toFixed(2)}px,${dy.toFixed(2)}px)` : '';
       });
+    });
     });
     el.addEventListener('mouseleave', () => {
       hint.classList.remove('hidden');
