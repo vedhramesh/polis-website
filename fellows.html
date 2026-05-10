@@ -72,7 +72,7 @@
     /* ─── PERSON GRID ─── */
     .person-grid {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       border-top: 1px solid var(--border);
       border-left: 1px solid var(--border);
     }
@@ -176,13 +176,17 @@
     @media (max-width: 900px) {
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
-      .person-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .person-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .page-wrap { padding: 48px 24px 72px; }
       .pledge-grid { grid-template-columns: repeat(3, 1fr) !important; }
+      .person-name { font-size: 14px; }
+      .person-role { font-size: 9px; }
     }
     @media (max-width: 600px) {
       .person-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .pledge-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .person-name { font-size: 12px; }
+      .person-role { font-size: 8px; }
     }
     .pledge-grid {
       display: grid;
@@ -263,52 +267,18 @@
   </div>
 
   <div class="person-grid fade-up delay-1" style="max-width:1000px;margin:0 auto 0;">
-    <div class="person-card">
-      <div class="person-avatar"></div>
-      <div class="person-name">Placeholder Name</div>
-      <div class="person-role">Co-President</div>
-    </div>
-    <div class="person-card">
-      <div class="person-avatar"></div>
-      <div class="person-name">Placeholder Name</div>
-      <div class="person-role">Co-President</div>
-    </div>
-    <div class="person-card">
-      <div class="person-avatar"></div>
-      <div class="person-name">Placeholder Name</div>
-      <div class="person-role">Finance Chair</div>
-    </div>
-    <div class="person-card">
-      <div class="person-avatar"></div>
-      <div class="person-name">Placeholder Name</div>
-      <div class="person-role">Internal Affairs Chair</div>
-    </div>
-    <div class="person-card">
-      <div class="person-avatar"></div>
-      <div class="person-name">Placeholder Name</div>
-      <div class="person-role">Social Chair</div>
-    </div>
-    <div class="person-card">
-      <div class="person-avatar"></div>
-      <div class="person-name">Placeholder Name</div>
-      <div class="person-role">External Affairs Chair</div>
-    </div>
-    <div class="person-card">
-      <div class="person-avatar"></div>
-      <div class="person-name">Placeholder Name</div>
-      <div class="person-role">Communications Chair</div>
-    </div>
-    <div class="person-card">
-      <div class="person-avatar"></div>
-      <div class="person-name">Placeholder Name</div>
-      <div class="person-role">Website &amp; Journal Editor</div>
-    </div>
-    <div class="person-card">
-      <div class="person-avatar"></div>
-      <div class="person-name">Placeholder Name</div>
-      <div class="person-role">Recruitment &amp; Membership</div>
-    </div>
-    <div class="person-card empty"></div>
+    <div class="person-card"><div class="person-avatar"></div><div class="person-name" data-email="taani@sas.upenn.edu">Tanisha Agrawal</div><div class="person-role">Co-President</div></div>
+    <div class="person-card"><div class="person-avatar"></div><div class="person-name" data-email="mphoebe@sas.upenn.edu">Phoebe Martin</div><div class="person-role">Co-President</div></div>
+    <div class="person-card"><div class="person-avatar"></div><div class="person-name" data-email="joseserr@sas.upenn.edu">José Carlos Serrano</div><div class="person-role">Vice President</div></div>
+    <div class="person-card"><div class="person-avatar"></div><div class="person-name" data-email="vedh@sas.upenn.edu">Vedh Ramesh</div><div class="person-role">External Affairs Chair</div></div>
+    <div class="person-card"><div class="person-avatar"></div><div class="person-name" data-email="sofiagar@sas.upenn.edu">Sofía García Andrés</div><div class="person-role">Social Chair</div></div>
+    <div class="person-card"><div class="person-avatar"></div><div class="person-name" data-email="nikki55@sas.upenn.edu">Nicolina Monacelli</div><div class="person-role">Finance Chair</div></div>
+    <div class="person-card"><div class="person-avatar"></div><div class="person-name" data-email="jxweng@sas.upenn.edu">Justine Weng</div><div class="person-role">Communications Chair</div></div>
+    <div class="person-card"><div class="person-avatar"></div><div class="person-name" data-email="alexdash@sas.upenn.edu">Alex Dash</div><div class="person-role">Membership &amp; Initiation Chair</div></div>
+    <div class="person-card"><div class="person-avatar"></div><div class="person-name" data-email="nilario@sas.upenn.edu">Nicola Ilario</div><div class="person-role">Managing Editor</div></div>
+    <div class="person-card"><div class="person-avatar"></div><div class="person-name" data-email="brpryor@sas.upenn.edu">Brayden Pryor</div><div class="person-role">Senior Advisor</div></div>
+    <div class="person-card"><div class="person-avatar"></div><div class="person-name" data-email="avadella@sas.upenn.edu">Abigail Vadella</div><div class="person-role">Senior Advisor</div></div>
+    <div class="person-card"><div class="person-avatar"></div><div class="person-name" data-email="wgran@sas.upenn.edu">William Grantland</div><div class="person-role">Senior Advisor</div></div>
   </div>
 
   <!-- PLEDGE CLASSES -->
@@ -409,17 +379,6 @@
     <a href="journal.html">Journal</a>
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSczFYKmAfR-e9em0fsbexaH1WnpUkUtWCl-EkOU3zT4IGx6vA/viewform">Apply</a>
   </nav>
-  <div class="social-links" style="display:flex;justify-content:center;gap:14px;margin-bottom:32px">
-    <a href="https://www.instagram.com/polisupenn/" aria-label="Instagram">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
-    </a>
-    <a href="https://www.linkedin.com/company/pi-lambda-sigma-university-of-pennsylvania/" aria-label="LinkedIn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-    </a>
-    <a href="https://www.facebook.com/polisupenn/" aria-label="Facebook">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-    </a>
-  </div>
   <div class="footer-copy"><em>&copy; Pi Lambda Sigma &middot; University of Pennsylvania &middot; 2026</em></div>
 </footer>
 
@@ -481,9 +440,9 @@
 
   // Wire up board cards — email replaces name, no size change to avoid layout shift
   document.querySelectorAll('.person-card:not(.empty)').forEach(card => {
-    const email = card.dataset.email || 'placeholder@upenn.edu';
     const nameEl = card.querySelector('.person-name');
     if (!nameEl) return;
+    const email = nameEl.dataset.email || 'placeholder@upenn.edu';
     const originalName = nameEl.textContent;
     let timer;
     let emailShowing = false;
