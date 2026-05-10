@@ -1104,5 +1104,61 @@
     }
   });
 </script>
+
+  <div id="search-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(22,32,64,0.45);backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding-top:120px;">
+    <div style="width:100%;max-width:600px;background:var(--cream);border:1px solid var(--border);box-shadow:0 20px 60px rgba(22,32,64,.2);margin:0 24px;">
+      <div style="display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.75" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="search-input" type="text" placeholder="Search POLIS..." autocomplete="off" style="flex:1;border:none;background:none;font-family:var(--ff-body);font-size:17px;color:var(--navy);outline:none;" />
+        <kbd onclick="closeSearch()" style="font-family:var(--ff-body);font-size:11px;color:var(--muted);border:1px solid var(--border);padding:2px 6px;cursor:pointer;">ESC</kbd>
+      </div>
+      <div id="search-results" style="max-height:400px;overflow-y:auto;padding:8px 0;"></div>
+    </div>
+  </div>
+  <script>
+    const SEARCH_DATA = [
+      {title:'Network',sub:'Alumni Network',url:'network.html',cat:'Pages'},
+      {title:'Fellows',sub:'Board & Pledge Classes',url:'fellows.html',cat:'Pages'},
+      {title:'Events',sub:'Upcoming & Past Events',url:'events.html',cat:'Pages'},
+      {title:'Periodical',sub:'POLIS Periodical',url:'periodical.html',cat:'Pages'},
+      {title:'Journal',sub:'POLIS Journal',url:'journal.html',cat:'Pages'},
+      {title:'Apply',sub:'Apply to POLIS',url:'https://docs.google.com/forms/d/e/1FAIpQLSczFYKmAfR-e9em0fsbexaH1WnpUkUtWCl-EkOU3zT4IGx6vA/viewform',cat:'Pages'},
+      {title:'Tanisha Agrawal',sub:'Co-President',url:'fellows.html',cat:'Board'},
+      {title:'Phoebe Martin',sub:'Co-President',url:'fellows.html',cat:'Board'},
+      {title:'José Carlos Serrano',sub:'Vice President',url:'fellows.html',cat:'Board'},
+      {title:'Vedh Ramesh',sub:'External Affairs Chair',url:'fellows.html',cat:'Board'},
+      {title:'Sofía García Andrés',sub:'Social Chair',url:'fellows.html',cat:'Board'},
+      {title:'Nicolina Monacelli',sub:'Finance Chair',url:'fellows.html',cat:'Board'},
+      {title:'Justine Weng',sub:'Communications Chair',url:'fellows.html',cat:'Board'},
+      {title:'Alex Dash',sub:'Membership & Initiation Chair',url:'fellows.html',cat:'Board'},
+      {title:'Nicola Ilario',sub:'Managing Editor',url:'fellows.html',cat:'Board'},
+      {title:'Brayden Pryor',sub:'Senior Advisor',url:'fellows.html',cat:'Board'},
+      {title:'Abigail Vadella',sub:'Senior Advisor',url:'fellows.html',cat:'Board'},
+      {title:'William Grantland',sub:'Senior Advisor',url:'fellows.html',cat:'Board'},
+      {title:'U.S. Department of State',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'U.S. Senate',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'CIA',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'White House',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'McKinsey & Company',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'United Nations',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'U.S. House of Representatives',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'European Parliament',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'U.S. Department of the Treasury',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'Dept. of Health and Human Services',sub:'Network',url:'network.html',cat:'Network'},
+    ];
+    function openSearch(){const o=document.getElementById('search-overlay');o.style.display='flex';setTimeout(()=>document.getElementById('search-input').focus(),50);renderResults('');}
+    function closeSearch(){document.getElementById('search-overlay').style.display='none';document.getElementById('search-input').value='';}
+    document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();openSearch();}if(e.key==='Escape')closeSearch();});
+    document.getElementById('search-overlay').addEventListener('click',e=>{if(e.target===document.getElementById('search-overlay'))closeSearch();});
+    document.getElementById('search-input').addEventListener('input',e=>renderResults(e.target.value.trim().toLowerCase()));
+    function renderResults(q){
+      const c=document.getElementById('search-results');
+      const hits=q?SEARCH_DATA.filter(d=>d.title.toLowerCase().includes(q)||d.sub.toLowerCase().includes(q)||d.cat.toLowerCase().includes(q)):SEARCH_DATA.filter(d=>d.cat==='Pages');
+      if(!hits.length){c.innerHTML='<div style="padding:20px 24px;font-family:var(--ff-body);font-size:15px;color:var(--muted)">No results found.</div>';return;}
+      const g={};hits.forEach(h=>{if(!g[h.cat])g[h.cat]=[];g[h.cat].push(h);});
+      c.innerHTML=Object.entries(g).map(([cat,items])=>`<div style="padding:6px 20px 2px;font-family:var(--ff-body);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)">${cat}</div>${items.map(item=>`<a href="${item.url}" onclick="closeSearch()" style="display:flex;align-items:center;justify-content:space-between;padding:10px 20px;text-decoration:none;transition:background .15s;"><div><div style="font-family:var(--ff-body);font-size:15.5px;color:var(--navy)">${item.title}</div><div style="font-family:var(--ff-body);font-size:13px;color:var(--muted)">${item.sub}</div></div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.75"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>`).join('')}`).join('');
+      c.querySelectorAll('a').forEach(a=>{a.addEventListener('mouseenter',()=>a.style.background='rgba(184,146,42,.07)');a.addEventListener('mouseleave',()=>a.style.background='');});
+    }
+  </script>
 </body>
 </html>
