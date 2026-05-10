@@ -709,46 +709,27 @@
     .fade-up.delay-4 { transition-delay: .4s; }
   </style>
   <style>
-    #page-cover { position:fixed; inset:0; background:var(--cream); z-index:9999; pointer-events:none; opacity:0; transition:opacity 0.2s ease; }
-    #page-cover.visible { opacity:1; }
+    body { opacity: 0; transition: opacity 0.25s ease; }
+    body.loaded { opacity: 1; }
   </style>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const cover = document.createElement('div');
-      cover.id = 'page-cover';
-      document.body.prepend(cover);
-    });
+    document.addEventListener("DOMContentLoaded", () => document.body.classList.add("loaded"));
     document.addEventListener("click", e => {
       const a = e.target.closest("a");
       if (!a) return;
       const href = a.getAttribute("href");
       if (!href || href.startsWith("http") || href.startsWith("#") || href.startsWith("mailto")) return;
       e.preventDefault();
-      const cover = document.getElementById('page-cover');
-      cover.classList.add('visible');
-      setTimeout(() => window.location.href = href, 200);
+      document.body.style.opacity = "0";
+      setTimeout(() => window.location.href = href, 250);
     });
   </script>
-
-  <style>
-    .nav-links a { position: relative; }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 0;
-      width: 0; height: 1.5px;
-      background: #b8922a;
-      transition: width 0.28s ease;
-    }
-    .nav-links a:hover::after { width: 100%; }
-    .nav-links a.active::after { width: 100%; }
-  </style>
 </head>
 <body>
 
 <!-- ANNOUNCEMENT BAR -->
 <div id="announce">
-  Fall 2026 recruitment is open through September 8 &mdash; <a href="https://docs.google.com/forms/d/e/1FAIpQLSczFYKmAfR-e9em0fsbexaH1WnpUkUtWCl-EkOU3zT4IGx6vA/viewform">apply now.</a>
+  Fall 2026 recruitment is open through September 8 &mdash; <a href="#apply">apply now.</a>
 </div>
 
 <!-- NAVBAR -->
@@ -828,27 +809,31 @@
       <div class="logo-item" data-name="U.S. Department of State"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="U.S. Senate"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="Central Intelligence Agency"><div class="logo-circle">Logo<br>Here</div></div>
-      <div class="logo-item" data-name="National Security Council"><div class="logo-circle">Logo<br>Here</div></div>
+      <div class="logo-item" data-name="White House"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="McKinsey & Company"><div class="logo-circle">Logo<br>Here</div></div>
-      <div class="logo-item" data-name="The Brookings Institution"><div class="logo-circle">Logo<br>Here</div></div>
+      <div class="logo-item" data-name="United Nations"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="U.S. House of Representatives"><div class="logo-circle">Logo<br>Here</div></div>
-      <div class="logo-item" data-name="U.S. Department of Defense"><div class="logo-circle">Logo<br>Here</div></div>
+      <div class="logo-item" data-name="European Parliament"><div class="logo-circle">Logo<br>Here</div></div>
+      <div class="logo-item" data-name="U.S. Department of the Treasury"><div class="logo-circle">Logo<br>Here</div></div>
+      <div class="logo-item" data-name="Department of Health and Human Services"><div class="logo-circle">Logo<br>Here</div></div>
       <!-- Duplicate set for seamless loop -->
       <div class="logo-item" data-name="U.S. Department of State"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="U.S. Senate"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="Central Intelligence Agency"><div class="logo-circle">Logo<br>Here</div></div>
-      <div class="logo-item" data-name="National Security Council"><div class="logo-circle">Logo<br>Here</div></div>
+      <div class="logo-item" data-name="White House"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="McKinsey & Company"><div class="logo-circle">Logo<br>Here</div></div>
-      <div class="logo-item" data-name="The Brookings Institution"><div class="logo-circle">Logo<br>Here</div></div>
+      <div class="logo-item" data-name="United Nations"><div class="logo-circle">Logo<br>Here</div></div>
       <div class="logo-item" data-name="U.S. House of Representatives"><div class="logo-circle">Logo<br>Here</div></div>
-      <div class="logo-item" data-name="U.S. Department of Defense"><div class="logo-circle">Logo<br>Here</div></div>
+      <div class="logo-item" data-name="European Parliament"><div class="logo-circle">Logo<br>Here</div></div>
+      <div class="logo-item" data-name="U.S. Department of the Treasury"><div class="logo-circle">Logo<br>Here</div></div>
+      <div class="logo-item" data-name="Department of Health and Human Services"><div class="logo-circle">Logo<br>Here</div></div>
     </div>
   </div>
 
   <div id="stats">
     <div class="stat-item fade-up">
       <div class="stat-num" data-target="60" data-suffix="+">60+</div>
-      <div class="stat-label">Active Fellows</div>
+      <div class="stat-label">Active fellows</div>
     </div>
     <div class="stat-item fade-up delay-1">
       <div class="stat-num" data-target="3">3</div>
@@ -856,7 +841,7 @@
     </div>
     <div class="stat-item fade-up delay-2">
       <div class="stat-num" data-target="38">38</div>
-      <div class="stat-label">Federal &amp; state offices POLIS Fellows are in</div>
+      <div class="stat-label">Federal &amp; state offices POLIS fellows are in</div>
     </div>
     <div class="stat-item fade-up delay-3">
       <div class="stat-num" data-target="8">8</div>
@@ -892,7 +877,7 @@
         <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="12"/><path d="M2 12h20"/></svg>
       </div>
       <div class="feature-title">Career Development</div>
-      <p class="feature-desc">Resume reviews, security clearance walkthroughs, federal-hire workshops, and funded summer Fellowships in offices that don&rsquo;t typically pay.</p>
+      <p class="feature-desc">Resume reviews, security clearance walkthroughs, federal-hire workshops, and funded summer fellowships in offices that don&rsquo;t typically pay.</p>
     </div>
   </div>
 </section>
@@ -937,20 +922,8 @@
   <p class="join-desc fade-up delay-2">
     Missed the application deadline? No worries! Join our mailing list and follow us on Instagram to get updates, as well as notifications for when rushing begins for next semester.
   </p>
-  <div class="join-form fade-up delay-3">
-    <input type="email" placeholder="you@upenn.edu" aria-label="Email address" />
-    <button type="button">Subscribe</button>
-  </div>
-  <div class="social-links fade-up delay-4">
-    <a href="#" class="social-link" aria-label="Instagram">
-      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
-    </a>
-    <a href="#" class="social-link" aria-label="LinkedIn">
-      <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-    </a>
-    <a href="#" class="social-link" aria-label="Facebook">
-      <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-    </a>
+  <div class="hero-ctas fade-up delay-3">
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSczFYKmAfR-e9em0fsbexaH1WnpUkUtWCl-EkOU3zT4IGx6vA/viewform" target="_blank" class="btn-primary">Join the Mailing List &nbsp;&#8594;</a>
   </div>
 </section>
 
@@ -967,6 +940,17 @@
     <a href="journal.html">Journal</a>
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSczFYKmAfR-e9em0fsbexaH1WnpUkUtWCl-EkOU3zT4IGx6vA/viewform">Apply</a>
   </nav>
+  <div class="social-links" style="justify-content:center;margin-bottom:32px">
+    <a href="#" class="social-link" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
+    </a>
+    <a href="#" class="social-link" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+    <a href="#" class="social-link" aria-label="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+    </a>
+  </div>
   <div class="footer-copy">
     <em>&copy; Pi Lambda Sigma &middot; University of Pennsylvania &middot; 2026</em>
   </div>
@@ -1092,8 +1076,6 @@
       document.getElementById('home-events-empty').style.display = 'block';
     }
   })();
-
-  // Subscribe form
   const subscribeBtn = document.querySelector('.join-form button');
   const emailInput   = document.querySelector('.join-form input');
   subscribeBtn.addEventListener('click', () => {
