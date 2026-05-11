@@ -371,7 +371,7 @@
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
       #announce { position: fixed; top: 0; left: 0; right: 0; z-index: 101; }
-      #nav { position: fixed; top: 40px; left: 0; right: 0; }
+      #nav { position: fixed; left: 0; right: 0; }
       body { padding-top: 106px; }
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
@@ -538,6 +538,14 @@
 
 <script>
   // ── BOILERPLATE ────────────────────────────────────────────────────────────
+  const announceBar = document.getElementById('announce');
+  function positionNav() {
+    const h = announceBar ? announceBar.offsetHeight : 0;
+    document.getElementById('nav').style.top = h + 'px';
+    document.body.style.paddingTop = (h + 66) + 'px';
+  }
+  positionNav();
+  window.addEventListener('resize', positionNav);
   const nav = document.getElementById('nav');
 const obsEl = new IntersectionObserver(entries => entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('visible'); obsEl.unobserve(e.target); }
