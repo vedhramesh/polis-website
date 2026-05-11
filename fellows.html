@@ -193,6 +193,11 @@
       grid-template-columns: repeat(5, 1fr);
       gap: 0 32px;
     }
+      .hover-hint-mobile { display: none; }
+    @media (max-width: 768px) {
+      .hover-hint-desktop { display: none; }
+      .hover-hint-mobile { display: inline; }
+    }
   </style>
 
   <style>
