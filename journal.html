@@ -158,12 +158,6 @@
       cover.classList.add('visible');
       setTimeout(() => window.location.href = href, 200);
     });
-    window.addEventListener('scroll', () => {
-    const menu = document.getElementById('mobileMenu');
-    if (menu.classList.contains('open')) {
-      menu.style.top = document.getElementById('nav').getBoundingClientRect().bottom + 'px';
-    }
-  });
 </script>
 
   <style>
@@ -305,15 +299,7 @@
 
 <script>
   const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 10));
-  document.getElementById('hamburger').addEventListener('click', () => {
-    const menu = document.getElementById('mobileMenu');
-    menu.classList.toggle('open');
-    if (menu.classList.contains('open')) {
-      menu.style.top = document.getElementById('nav').getBoundingClientRect().bottom + 'px';
-    }
-  });
-  const fadeEls = document.querySelectorAll('.fade-up');
+const fadeEls = document.querySelectorAll('.fade-up');
   const obs = new IntersectionObserver((entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }), { threshold: 0.1 });
   fadeEls.forEach(el => obs.observe(el));
 </script>
@@ -423,6 +409,13 @@
       c.innerHTML=Object.entries(g).map(([cat,items])=>`<div style="padding:6px 20px 2px;font-family:var(--ff-body);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)">${cat}</div>${items.map(item=>`<a href="${item.url}" onclick="closeSearch()" style="display:flex;align-items:center;justify-content:space-between;padding:10px 20px;text-decoration:none;transition:background .15s;"><div><div style="font-family:var(--ff-body);font-size:15.5px;color:var(--navy)">${item.title}</div><div style="font-family:var(--ff-body);font-size:13px;color:var(--muted)">${item.sub}</div></div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.75"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>`).join('')}`).join('');
       c.querySelectorAll('a').forEach(a=>{a.addEventListener('mouseenter',()=>a.style.background='rgba(184,146,42,.07)');a.addEventListener('mouseleave',()=>a.style.background='');});
     }
-  </script>
+    window.addEventListener('scroll', () => {
+    const menu = document.getElementById('mobileMenu');
+    if (menu.classList.contains('open')) {
+      const navBottom = document.getElementById('nav').getBoundingClientRect().bottom;
+      menu.style.top = Math.max(66, navBottom) + 'px';
+    }
+  });
+</script>
 </body>
 </html>
