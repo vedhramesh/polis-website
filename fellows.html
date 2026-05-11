@@ -334,7 +334,7 @@
     </div>
 
     <!-- Spring '26 -->
-            <div id="class-spring26" style="display:none">
+        <div id="class-spring26">
       <div class="pledge-grid">
         <div><div style="font-family:var(--ff-body);font-size:14px;color:var(--navy);padding:10px 16px;border-left:2px solid rgba(0,0,0,0.1)" data-email="rafaa@sas.upenn.edu">Rafaa Bukhary</div>
           <div style="font-family:var(--ff-body);font-size:14px;color:var(--navy);padding:10px 16px;border-left:2px solid rgba(0,0,0,0.1);margin-top:8px" data-email="kchang07@sas.upenn.edu">Kaelie Chang</div>
@@ -363,3 +363,231 @@
           <div style="font-family:var(--ff-body);font-size:14px;color:var(--navy);padding:10px 16px;border-left:2px solid rgba(0,0,0,0.1);margin-top:8px" data-email="nwoiso@wharton.upenn.edu">Novia Woiso</div></div>
       </div>
     </div>
+    </div>
+  </div>
+
+</div>
+
+<footer id="footer">
+  <img src="logo.png" alt="POLIS" style="width:60px;height:60px;object-fit:contain;display:block;margin:0 auto 16px;" />
+  <div class="footer-wordmark">POLIS</div>
+  <div class="footer-sub">Pi Lambda Sigma &middot; University of Pennsylvania</div>
+  <nav class="footer-nav">
+    <a href="network.html">Network</a>
+    <a href="fellows.html">Fellows</a>
+    <a href="events.html">Events</a>
+    <a href="periodical.html">Periodical</a>
+    <a href="journal.html">Journal</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSczFYKmAfR-e9em0fsbexaH1WnpUkUtWCl-EkOU3zT4IGx6vA/viewform">Apply</a>
+  </nav>
+  <div style="display:flex;justify-content:center;gap:14px;margin-bottom:32px">
+    <a href="https://www.instagram.com/polisupenn/" style="width:40px;height:40px;border-radius:50%;border:1px solid #d5cec0;display:flex;align-items:center;justify-content:center;color:#2a3555" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg></a>
+    <a href="https://www.linkedin.com/company/pi-lambda-sigma-university-of-pennsylvania/" style="width:40px;height:40px;border-radius:50%;border:1px solid #d5cec0;display:flex;align-items:center;justify-content:center;color:#2a3555" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    <a href="https://www.facebook.com/polisupenn/" style="width:40px;height:40px;border-radius:50%;border:1px solid #d5cec0;display:flex;align-items:center;justify-content:center;color:#2a3555" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+  </div>
+  <div class="footer-copy"><em>&copy; Pi Lambda Sigma &middot; University of Pennsylvania &middot; 2026 &nbsp;&middot;&nbsp; Unauthorized use and/or duplication of any images or content on this website without express and written permission is strictly prohibited.</em></div>
+</footer>
+
+<script>
+  function showClass(id) {
+    ['fall25','spring26'].forEach(c => {
+      document.getElementById('class-' + c).style.display = c === id ? 'block' : 'none';
+      const tab = document.getElementById('tab-' + c);
+      tab.style.background = c === id ? 'var(--navy)' : 'transparent';
+      tab.style.color = c === id ? '#fff' : 'var(--text)';
+    });
+  }
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 10));
+  document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('open'));
+  const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }), { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  // Email hover — highlights on hover, email replaces name after 1 second
+  function setupEmailHover(el, email) {
+    let timer;
+    let emailShowing = false;
+    const originalText = el.childNodes[0].textContent.trim();
+    el.style.transition = 'color 0.3s ease, background 0.2s ease, border-color 0.2s ease';
+
+    el.addEventListener('mouseenter', () => {
+      el.style.background = 'rgba(184,146,42,.07)';
+      el.style.borderLeftColor = 'var(--gold)';
+      timer = setTimeout(() => {
+        emailShowing = true;
+        el.style.color = 'transparent';
+        setTimeout(() => {
+          el.childNodes[0].textContent = email;
+          el.style.color = 'var(--gold)';
+        }, 300);
+      }, 1000);
+    });
+
+    el.addEventListener('mouseleave', () => {
+      clearTimeout(timer);
+      el.style.background = '';
+      el.style.borderLeftColor = 'rgba(0,0,0,0.1)';
+      if (emailShowing) {
+        emailShowing = false;
+        el.style.color = 'transparent';
+        setTimeout(() => {
+          el.childNodes[0].textContent = originalText;
+          el.style.color = '';
+        }, 300);
+      }
+    });
+  }
+
+  // Wire up pledge class name divs
+  document.querySelectorAll('[data-email]').forEach(el => {
+    setupEmailHover(el, el.dataset.email);
+  });
+
+  // Wire up board cards — email replaces name, no size change to avoid layout shift
+  document.querySelectorAll('.person-card:not(.empty)').forEach(card => {
+    const nameEl = card.querySelector('.person-name');
+    if (!nameEl) return;
+    const email = nameEl.dataset.email || 'placeholder@upenn.edu';
+    const originalName = nameEl.textContent;
+    let timer;
+    let emailShowing = false;
+    nameEl.style.transition = 'opacity 0.2s';
+
+    card.addEventListener('mouseenter', () => {
+      timer = setTimeout(() => {
+        emailShowing = true;
+        nameEl.style.opacity = '0';
+        setTimeout(() => {
+          nameEl.textContent = email;
+          nameEl.style.color = 'var(--gold)';
+          nameEl.style.fontSize = '13px';
+          nameEl.style.opacity = '1';
+        }, 200);
+      }, 1000);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      clearTimeout(timer);
+      if (emailShowing) {
+        emailShowing = false;
+        nameEl.style.opacity = '0';
+        setTimeout(() => {
+          nameEl.textContent = originalName;
+          nameEl.style.color = '';
+          nameEl.style.fontSize = '';
+          nameEl.style.opacity = '1';
+        }, 200);
+      }
+    });
+  });
+</script>
+
+  <div id="search-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(22,32,64,0.45);backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding-top:120px;">
+    <div style="width:100%;max-width:600px;background:var(--cream);border:1px solid var(--border);box-shadow:0 20px 60px rgba(22,32,64,.2);margin:0 24px;">
+      <div style="display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.75" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="search-input" type="text" placeholder="Search POLIS..." autocomplete="off" style="flex:1;border:none;background:none;font-family:var(--ff-body);font-size:17px;color:var(--navy);outline:none;" />
+        <kbd onclick="closeSearch()" style="font-family:var(--ff-body);font-size:11px;color:var(--muted);border:1px solid var(--border);padding:2px 6px;cursor:pointer;">ESC</kbd>
+      </div>
+      <div id="search-results" style="max-height:400px;overflow-y:auto;padding:8px 0;"></div>
+    </div>
+  </div>
+  <script>
+    const SEARCH_DATA = [
+      {title:'Network',sub:'Alumni Network',url:'network.html',cat:'Pages'},
+      {title:'Fellows',sub:'Board & Pledge Classes',url:'fellows.html',cat:'Pages'},
+      {title:'Events',sub:'Upcoming & Past Events',url:'events.html',cat:'Pages'},
+      {title:'Periodical',sub:'POLIS Periodical',url:'periodical.html',cat:'Pages'},
+      {title:'Journal',sub:'POLIS Journal',url:'journal.html',cat:'Pages'},
+      {title:'Apply',sub:'Apply to POLIS',url:'https://docs.google.com/forms/d/e/1FAIpQLSczFYKmAfR-e9em0fsbexaH1WnpUkUtWCl-EkOU3zT4IGx6vA/viewform',cat:'Pages'},
+      // Fall '25
+      {title:'Juliet Adam',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Harian Aguilar',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Kenza Aissaoui',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Nouha Aissaoui',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Ariana Bertrand',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Julia Bochkarev',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Ferenc Brezo',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Martina Bulgarelli',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Devin Casano',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Tareque Chowdhury',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Khalil ElBechir',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Reina Gammarino',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Alejandro Mosquera García',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Linda Gayle',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Mohamad Hubbi',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Andrew Lu',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Sylvia Luffy',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Haley Mahoe',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Mariana Martinez',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Yuta Muraki',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Khushi Patil',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Kate Patterson',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Lidia Iasmina Tulus',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Grace Wang',sub:'Fall \'25 Fellow',url:'fellows.html',cat:'Fellows'},
+      // Spring '26
+      {title:'Rafaa Bukhary',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Kaelie Chang',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Seth Cyr',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Shiven Dawda',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Jean Finbar',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Linda Gayle',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Lindsey Huahuamullo',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Arti Jain',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Ayaan Jeraj',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Jessica Katz',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Edwin Lapp',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Greta Lee',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Jonathan Li',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Isaiah Littlejohn',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Zoe Mackey',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Robles Marquez',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Gabe McGuire',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Lawson Miller',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Nicolina Monacelli',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Jesus Nunez',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Michael Parella',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Anvi Sehgal',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Christine Sung',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Justine Weng',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Novia Woiso',sub:'Spring \'26 Fellow',url:'fellows.html',cat:'Fellows'},
+      {title:'Tanisha Agrawal',sub:'Co-President',url:'fellows.html',cat:'Board'},
+      {title:'Phoebe Martin',sub:'Co-President',url:'fellows.html',cat:'Board'},
+      {title:'José Carlos Serrano',sub:'Vice President',url:'fellows.html',cat:'Board'},
+      {title:'Vedh Ramesh',sub:'External Affairs Chair',url:'fellows.html',cat:'Board'},
+      {title:'Sofía García Andrés',sub:'Social Chair',url:'fellows.html',cat:'Board'},
+      {title:'Nicolina Monacelli',sub:'Finance Chair',url:'fellows.html',cat:'Board'},
+      {title:'Justine Weng',sub:'Communications Chair',url:'fellows.html',cat:'Board'},
+      {title:'Alex Dash',sub:'Membership & Initiation Chair',url:'fellows.html',cat:'Board'},
+      {title:'Nicola Ilario',sub:'Managing Editor',url:'fellows.html',cat:'Board'},
+      {title:'Brayden Pryor',sub:'Senior Advisor',url:'fellows.html',cat:'Board'},
+      {title:'Abigail Vadella',sub:'Senior Advisor',url:'fellows.html',cat:'Board'},
+      {title:'William Grantland',sub:'Senior Advisor',url:'fellows.html',cat:'Board'},
+      {title:'U.S. Department of State',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'U.S. Senate',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'CIA',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'White House',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'McKinsey & Company',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'United Nations',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'U.S. House of Representatives',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'European Parliament',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'U.S. Department of the Treasury',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'Dept. of Health and Human Services',sub:'Network',url:'network.html',cat:'Network'},
+    ];
+    function openSearch(){const o=document.getElementById('search-overlay');o.style.display='flex';setTimeout(()=>document.getElementById('search-input').focus(),50);renderResults('');}
+    function closeSearch(){document.getElementById('search-overlay').style.display='none';document.getElementById('search-input').value='';}
+    document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();openSearch();}if(e.key==='Escape')closeSearch();});
+    document.getElementById('search-overlay').addEventListener('click',e=>{if(e.target===document.getElementById('search-overlay'))closeSearch();});
+    document.getElementById('search-input').addEventListener('input',e=>renderResults(e.target.value.trim().toLowerCase()));
+    function renderResults(q){
+      const c=document.getElementById('search-results');
+      const hits=q?SEARCH_DATA.filter(d=>d.title.toLowerCase().includes(q)||d.sub.toLowerCase().includes(q)||d.cat.toLowerCase().includes(q)):SEARCH_DATA.filter(d=>d.cat==='Pages');
+      if(!hits.length){c.innerHTML='<div style="padding:20px 24px;font-family:var(--ff-body);font-size:15px;color:var(--muted)">No results found.</div>';return;}
+      const g={};hits.forEach(h=>{if(!g[h.cat])g[h.cat]=[];g[h.cat].push(h);});
+      c.innerHTML=Object.entries(g).map(([cat,items])=>`<div style="padding:6px 20px 2px;font-family:var(--ff-body);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)">${cat}</div>${items.map(item=>`<a href="${item.url}" onclick="closeSearch()" style="display:flex;align-items:center;justify-content:space-between;padding:10px 20px;text-decoration:none;transition:background .15s;"><div><div style="font-family:var(--ff-body);font-size:15.5px;color:var(--navy)">${item.title}</div><div style="font-family:var(--ff-body);font-size:13px;color:var(--muted)">${item.sub}</div></div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.75"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>`).join('')}`).join('');
+      c.querySelectorAll('a').forEach(a=>{a.addEventListener('mouseenter',()=>a.style.background='rgba(184,146,42,.07)');a.addEventListener('mouseleave',()=>a.style.background='');});
+    }
+  </script>
+</body>
+</html>
