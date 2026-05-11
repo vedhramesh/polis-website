@@ -413,7 +413,9 @@ const fadeEls = document.querySelectorAll('.fade-up');
     const menu = document.getElementById('mobileMenu');
     if (menu.classList.contains('open')) {
       const navBottom = document.getElementById('nav').getBoundingClientRect().bottom;
-      menu.style.top = Math.max(66, navBottom) + 'px';
+      const announce = document.getElementById('announce');
+    const announceH = announce ? Math.max(0, announce.getBoundingClientRect().bottom) : 0;
+    menu.style.top = (document.getElementById('nav').offsetHeight + announceH) + 'px';
     }
   });
 </script>
