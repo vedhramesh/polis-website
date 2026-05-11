@@ -378,6 +378,23 @@ const fadeEls = document.querySelectorAll('.fade-up');
     menu.style.top = (document.getElementById('nav').offsetHeight + announceH) + 'px';
     }
   });
+  document.getElementById('hamburger').addEventListener('click', () => {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('open');
+    if (menu.classList.contains('open')) {
+      const announce = document.getElementById('announce');
+      const announceH = announce ? Math.max(0, announce.getBoundingClientRect().bottom) : 0;
+      menu.style.top = (document.getElementById('nav').offsetHeight + announceH) + 'px';
+    }
+  });
+  window.addEventListener('scroll', () => {
+    const menu = document.getElementById('mobileMenu');
+    if (menu.classList.contains('open')) {
+      const announce = document.getElementById('announce');
+      const announceH = announce ? Math.max(0, announce.getBoundingClientRect().bottom) : 0;
+      menu.style.top = (document.getElementById('nav').offsetHeight + announceH) + 'px';
+    }
+  });
 </script>
 </body>
 </html>
