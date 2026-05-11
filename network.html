@@ -395,7 +395,13 @@
       document.body.style.opacity = "0";
       setTimeout(() => window.location.href = href, 250);
     });
-  </script>
+    window.addEventListener('scroll', () => {
+    const menu = document.getElementById('mobileMenu');
+    if (menu.classList.contains('open')) {
+      menu.style.top = document.getElementById('nav').getBoundingClientRect().bottom + 'px';
+    }
+  });
+</script>
 
   <style>
     .nav-links a { position: relative; }
