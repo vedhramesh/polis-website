@@ -537,8 +537,13 @@
   // ── BOILERPLATE ────────────────────────────────────────────────────────────
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 10));
-  document.getElementById('hamburger').addEventListener('click', () =>
-    document.getElementById('mobileMenu').classList.toggle('open'));
+  document.getElementById('hamburger').addEventListener('click', () => {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('open');
+    if (menu.classList.contains('open')) {
+      menu.style.top = document.getElementById('nav').getBoundingClientRect().bottom + 'px';
+    }
+  });
   const obsEl = new IntersectionObserver(entries => entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('visible'); obsEl.unobserve(e.target); }
   }), { threshold: 0.1 });

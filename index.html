@@ -976,6 +976,9 @@
   const mobileMenu = document.getElementById('mobileMenu');
   hamburger.addEventListener('click', () => {
     mobileMenu.classList.toggle('open');
+    if (mobileMenu.classList.contains('open')) {
+      mobileMenu.style.top = document.getElementById('nav').getBoundingClientRect().bottom + 'px';
+    }
   });
   mobileMenu.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => mobileMenu.classList.remove('open'));
