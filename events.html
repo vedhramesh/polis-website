@@ -362,10 +362,13 @@ const fadeEls = document.querySelectorAll('.fade-up');
     row.addEventListener('click', () => {
       const src = row.dataset.img;
       if (src) {
-        previewImg.src = src;
-        previewImg.style.display = 'block';
         previewPH.style.display = 'none';
-        setTimeout(() => previewImg.style.opacity = '1', 10);
+        previewImg.style.opacity = '0';
+        setTimeout(() => {
+          previewImg.src = src;
+          previewImg.style.display = 'block';
+          setTimeout(() => previewImg.style.opacity = '1', 10);
+        }, previewImg.src ? 300 : 0);
       } else {
         // placeholder — tint the preview box
         preview.style.background = 'var(--cream-2)';
