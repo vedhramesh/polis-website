@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="../logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What Magyar's Victory Means for the European Right — POLIS Periodical</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream:#ede9df; --navy:#162040; --gold:#b8922a; --gold-lt:#d4a83a;
+      --white:#faf9f6; --text:#2a3555; --muted:#6b7591; --border:#d5cec0;
+      --ff-serif:'Playfair Display',Georgia,serif; --ff-body:'EB Garamond',Georgia,serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background:var(--cream); color:var(--text); font-family:var(--ff-body); font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; opacity:0; transition:opacity .25s ease; }
+    body.loaded { opacity:1; }
+    a { color:inherit; text-decoration:none; }
+
+    #announce { background:var(--navy); color:#b0bbd4; font-family:var(--ff-body); font-size:13.5px; letter-spacing:.04em; padding:10px 20px; text-align:center; }
+    #announce a { color:var(--gold-lt); }
+    #nav { position:sticky; top:0; z-index:100; background:var(--cream); border-bottom:1px solid var(--border); padding:0 32px; display:flex; align-items:center; justify-content:space-between; height:66px; transition:box-shadow .3s; }
+    #nav.scrolled { box-shadow:0 2px 20px rgba(22,32,64,.08); }
+    .nav-logo { display:flex; align-items:center; gap:10px; }
+    .nav-wordmark { font-family:var(--ff-body); font-size:16px; letter-spacing:.22em; text-transform:uppercase; color:var(--navy); font-weight:500; }
+    .nav-links { display:flex; align-items:center; gap:34px; list-style:none; }
+    .nav-links a { font-family:var(--ff-body); font-size:15px; color:var(--text); letter-spacing:.03em; opacity:.85; transition:opacity .2s,color .2s; position:relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:1.5px; background:var(--gold); transition:width .28s ease; }
+    .nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+    .nav-links a:hover { opacity:1; color:var(--navy); }
+    .nav-links .nav-apply { font-weight:500; color:var(--navy); opacity:1; }
+    .nav-hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; }
+    .nav-hamburger span { display:block; width:22px; height:1.5px; background:var(--navy); }
+    .nav-mobile-menu { display:none; position:fixed; left:0; right:0; background:var(--cream); border-bottom:1px solid var(--border); padding:20px 24px; z-index:99; flex-direction:column; }
+    .nav-mobile-menu.open { display:flex; }
+    .nav-mobile-menu a { font-family:var(--ff-body); font-size:17px; color:var(--navy); padding:14px 0; border-bottom:1px solid var(--border); }
+    .nav-mobile-menu a:last-child { border-bottom:none; }
+
+    /* Article layout */
+    .article-wrap { max-width:720px; margin:0 auto; padding:72px 32px 96px; }
+    .article-back { display:inline-flex; align-items:center; gap:6px; font-family:var(--ff-body); font-size:14px; letter-spacing:.06em; text-transform:uppercase; color:var(--gold); margin-bottom:48px; transition:gap .2s; }
+    .article-back:hover { gap:10px; }
+    .article-eyebrow { font-family:var(--ff-body); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:20px; }
+    .article-title { font-family:var(--ff-serif); font-size:clamp(32px,5vw,52px); font-weight:400; color:var(--navy); line-height:1.15; margin-bottom:24px; }
+    .article-meta { font-family:var(--ff-body); font-size:15px; color:var(--muted); padding-bottom:32px; border-bottom:1px solid var(--border); margin-bottom:48px; }
+    .article-meta strong { color:var(--text); font-weight:500; }
+    .article-body { font-family:var(--ff-body); font-size:19px; line-height:1.85; color:var(--text); }
+    .article-body p { margin-bottom:1.5em; }
+    .article-body h2 { font-family:var(--ff-serif); font-size:26px; font-weight:400; color:var(--navy); margin:2em 0 .75em; }
+    .article-body blockquote { border-left:3px solid var(--gold); padding-left:24px; margin:2em 0; font-style:italic; color:var(--muted); }
+
+    #footer { border-top:1px solid var(--border); padding:56px 24px 32px; text-align:center; }
+    .footer-wordmark { font-family:var(--ff-body); font-size:18px; letter-spacing:.28em; text-transform:uppercase; color:var(--navy); margin-bottom:6px; }
+    .footer-sub { font-size:14px; color:var(--muted); margin-bottom:32px; }
+    .footer-nav { display:flex; justify-content:center; gap:28px; flex-wrap:wrap; margin-bottom:44px; }
+    .footer-nav a { font-size:14.5px; color:var(--text); opacity:.75; transition:opacity .2s; }
+    .footer-nav a:hover { opacity:1; }
+    .footer-copy { font-size:13px; color:var(--muted); font-style:italic; border-top:1px solid var(--border); padding-top:24px; }
+
+    @media (max-width:768px) {
+      .nav-links { display:none; }
+      .nav-hamburger { display:flex; }
+      .article-wrap { padding:48px 24px 72px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="announce">Fall 2026 recruitment is open through September 8 &mdash; <a href="https://docs.google.com/forms/d/e/1FAIpQLSczFYKmAfR-e9em0fsbexaH1WnpUkUtWCl-EkOU3zT4IGx6vA/viewform">apply now.</a></div>
+
+<nav id="nav">
+  <a href="../index.html" class="nav-logo">
+    <img src="../logo.png" alt="POLIS" style="width:38px;height:38px;object-fit:contain;" />
+    <span class="nav-wordmark">POLIS</span>
+  </a>
+  <ul class="nav-links">
+    <li><button onclick="openSearch()" style="background:none;border:none;cursor:pointer;padding:4px 6px;color:var(--text);opacity:.75;display:flex;align-items:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button></li>
+    <li><a href="../network.html">Network</a></li>
+    <li><a href="../fellows.html">Fellows</a></li>
+    <li><a href="../events.html">Events</a></li>
+    <li><a href="../periodical.html" class="active">Periodical</a></li>
+    <li><a href="../journal.html">Journal</a></li>
+    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSczFYKmAfR-e9em0fsbexaH1WnpUkUtWCl-EkOU3zT4IGx6vA/viewform" class="nav-apply">Apply</a></li>
+  </ul>
+  <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="nav-mobile-menu" id="mobileMenu">
+  <a href="../network.html">Network</a>
+  <a href="../fellows.html">Fellows</a>
+  <a href="../events.html">Events</a>
+  <a href="../periodical.html">Periodical</a>
+  <a href="../journal.html">Journal</a>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSczFYKmAfR-e9em0fsbexaH1WnpUkUtWCl-EkOU3zT4IGx6vA/viewform">Apply</a>
+</div>
+
+<div class="article-wrap">
+  <a href="../periodical.html" class="article-back">&#8592; &nbsp;Back to Periodical</a>
+  <div class="article-eyebrow">POLIS Periodical</div>
+  <h1 class="article-title">What Magyar's Victory Means for the European Right</h1>
+  <div class="article-meta">By <strong>Nicola Ilario</strong> &nbsp;&middot;&nbsp; Spring 2026</div>
+  <div class="article-body">
+    <p>Article content coming soon.</p>
+  </div>
+</div>
+
+<footer id="footer">
+  <img src="../logo.png" alt="POLIS" style="width:60px;height:60px;object-fit:contain;display:block;margin:0 auto 16px;" />
+  <div class="footer-wordmark">POLIS</div>
+  <div class="footer-sub">Pi Lambda Sigma &middot; University of Pennsylvania</div>
+  <nav class="footer-nav">
+    <a href="../network.html">Network</a>
+    <a href="../fellows.html">Fellows</a>
+    <a href="../events.html">Events</a>
+    <a href="../periodical.html">Periodical</a>
+    <a href="../journal.html">Journal</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSczFYKmAfR-e9em0fsbexaH1WnpUkUtWCl-EkOU3zT4IGx6vA/viewform">Apply</a>
+  </nav>
+  <div style="display:flex;justify-content:center;gap:14px;margin-bottom:32px">
+    <a href="https://www.instagram.com/polisupenn/" style="width:40px;height:40px;border-radius:50%;border:1px solid #d5cec0;display:flex;align-items:center;justify-content:center;color:#2a3555" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg></a>
+    <a href="https://www.linkedin.com/company/pi-lambda-sigma-university-of-pennsylvania/" style="width:40px;height:40px;border-radius:50%;border:1px solid #d5cec0;display:flex;align-items:center;justify-content:center;color:#2a3555" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    <a href="https://www.facebook.com/polisupenn/" style="width:40px;height:40px;border-radius:50%;border:1px solid #d5cec0;display:flex;align-items:center;justify-content:center;color:#2a3555" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+  </div>
+  <div class="footer-copy"><em>&copy; Pi Lambda Sigma &middot; University of Pennsylvania &middot; 2026 &nbsp;&middot;&nbsp; Unauthorized use and/or duplication of any images or content on this website without express and written permission is strictly prohibited.</em></div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => document.body.classList.add('loaded'));
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    if (!href || href.startsWith('http') || href.startsWith('#') || href.startsWith('mailto')) return;
+    e.preventDefault();
+    document.body.style.opacity = '0';
+    setTimeout(() => window.location.href = href, 250);
+  });
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 10));
+  document.getElementById('hamburger').addEventListener('click', () => {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('open');
+    if (menu.classList.contains('open')) {
+      const announce = document.getElementById('announce');
+      const announceH = announce ? Math.max(0, announce.getBoundingClientRect().bottom) : 0;
+      menu.style.top = (nav.offsetHeight + announceH) + 'px';
+    }
+  });
+  window.addEventListener('scroll', () => {
+    const menu = document.getElementById('mobileMenu');
+    if (menu.classList.contains('open')) {
+      const announce = document.getElementById('announce');
+      const announceH = announce ? Math.max(0, announce.getBoundingClientRect().bottom) : 0;
+      menu.style.top = (nav.offsetHeight + announceH) + 'px';
+    }
+  });
+  function openSearch() {}
+</script>
+</body>
+</html>
