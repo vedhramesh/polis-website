@@ -234,7 +234,7 @@
       <div id="event-preview-placeholder" style="
         font-family:var(--ff-body);font-size:13px;letter-spacing:.12em;
         text-transform:uppercase;color:var(--muted);text-align:center;
-      ">Hover over an event to see it</div>
+      ">Tap an event to see it</div>
       <img id="event-preview-img" src="" alt="" style="
         display:none;width:100%;height:100%;object-fit:cover;
         position:absolute;inset:0;opacity:0;transition:opacity .3s;
@@ -359,7 +359,7 @@ const fadeEls = document.querySelectorAll('.fade-up');
 
   document.querySelectorAll('.styled-table tbody tr').forEach(row => {
     row.style.cursor = 'default';
-    row.addEventListener('mouseenter', () => {
+    row.addEventListener('click', () => {
       const src = row.dataset.img;
       if (src) {
         previewImg.src = src;
@@ -378,15 +378,7 @@ const fadeEls = document.querySelectorAll('.fade-up');
         previewPH.style.display = 'block';
       }
     });
-    row.addEventListener('mouseleave', () => {
-      previewImg.style.opacity = '0';
-      setTimeout(() => { previewImg.style.display = 'none'; previewImg.src = ''; }, 300);
-      previewPH.textContent = 'Hover over an event to see it';
-      previewPH.style.color = 'var(--muted)';
-      previewPH.style.fontSize = '13px';
-      previewPH.style.fontFamily = 'var(--ff-body)';
-      previewPH.style.display = 'block';
-    });
+
   });
 
   loadEvents();
