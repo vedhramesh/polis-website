@@ -204,33 +204,18 @@
 
     .org-circle {
       border-radius: 50%;
-      border: 1.5px dashed var(--border);
+      border: 1.5px dashed transparent;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 7.5px;
-      letter-spacing: .07em;
-      color: var(--muted);
-      text-transform: uppercase;
-      text-align: center;
-      background: repeating-linear-gradient(
-        -45deg, transparent, transparent 4px,
-        rgba(0,0,0,.02) 4px, rgba(0,0,0,.02) 8px
-      );
-      transition:
-        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-        box-shadow 0.3s ease,
-        border-color 0.3s ease,
-        background 0.3s ease;
+      background: none;
+      transition: transform .25s, box-shadow .25s, border-color .25s, background .25s;
     }
     .org-item:hover .org-circle {
       transform: scale(1.5);
       border: 2px solid var(--gold);
       background: var(--white);
-      box-shadow:
-        0 0 0 8px rgba(184,146,42,.12),
-        0 0 30px rgba(184,146,42,.28),
-        0 10px 32px rgba(22,32,64,.14);
+      box-shadow: 0 0 0 5px rgba(184,146,42,.1), 0 10px 30px rgba(184,146,42,.2);
     }
 
     .org-name {
@@ -813,7 +798,7 @@ const obsEl = new IntersectionObserver(entries => entries.forEach(e => {
     el.className = 'org-item';
     el.style.cssText = `left:${cx - R}px;top:${cy - R}px;width:${D}px;height:${D}px`;
     el.innerHTML = `
-      <div class="org-circle" style="width:${D}px;height:${D}px;display:flex;align-items:center;justify-content:center;">${LOGOS[i] ? `<img src="${LOGOS[i]}" alt="${AGENCIES[i]}" style="width:65%;height:65%;object-fit:contain;display:block;margin:auto;" />` : ''}</div>
+      <div class="org-circle" style="width:${D}px;height:${D}px;display:flex;align-items:center;justify-content:center;">${LOGOS[i] ? `<img src="${LOGOS[i]}" alt="${AGENCIES[i]}" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" />` : ''}</div>
       <div class="org-name">${AGENCIES[i]}</div>`;
     map.appendChild(el);
     return { el, cx, cy };
