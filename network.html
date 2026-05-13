@@ -585,15 +585,26 @@ const obsEl = new IntersectionObserver(entries => entries.forEach(e => {
 
   // Scale map to fit on mobile
   function scaleMap() {
-    const available = window.innerWidth - 32;
-    if (available < W) {
-      const scale = available / W;
+    if (window.innerWidth <= 768) {
+      const scale = window.innerWidth / W;
       map.style.transform = `scale(${scale})`;
       map.style.transformOrigin = 'top center';
-      map.parentElement.style.paddingBottom = (64 + Ht * (scale - 1)) + 'px';
+      map.style.marginLeft = 'auto';
+      map.style.marginRight = 'auto';
+      map.style.display = 'block';
+      map.parentElement.style.height = (Ht * scale + 64) + 'px';
+      map.parentElement.style.display = 'flex';
+      map.parentElement.style.justifyContent = 'center';
+      map.parentElement.style.overflow = 'visible';
     } else {
       map.style.transform = '';
-      map.parentElement.style.paddingBottom = '';
+      map.style.marginLeft = '';
+      map.style.marginRight = '';
+      map.style.display = '';
+      map.parentElement.style.height = '';
+      map.parentElement.style.display = '';
+      map.parentElement.style.justifyContent = '';
+      map.parentElement.style.overflow = '';
     }
   }
   scaleMap();
