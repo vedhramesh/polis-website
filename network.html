@@ -506,6 +506,7 @@
 </div>
 
 
+
 <!-- WORLD MAP -->
 <div class="fade-up" style="padding:80px 24px 96px;background:var(--navy);margin-top:0">
   <div style="max-width:1100px;margin:0 auto">
@@ -525,7 +526,13 @@
           <span style="display:block;width:32px;height:1px;background:var(--gold);opacity:.7"></span>
         </div>
       </div>
-      <svg id="world-svg" viewBox="0 0 960 500" style="width:100%;display:block"></svg>
+      <div id="zoom-btns" style="position:absolute;bottom:16px;right:16px;z-index:10;display:flex;flex-direction:column;gap:4px">
+        <button id="zoom-in"  style="width:32px;height:32px;background:var(--cream);border:1px solid var(--border);color:var(--navy);font-size:18px;font-family:var(--ff-body);cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">+</button>
+        <button id="zoom-out" style="width:32px;height:32px;background:var(--cream);border:1px solid var(--border);color:var(--navy);font-size:18px;font-family:var(--ff-body);cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">&minus;</button>
+      </div>
+      <svg id="world-svg" viewBox="0 0 960 500" style="width:100%;display:block;overflow:hidden">
+        <g id="map-g"></g>
+      </svg>
     </div>
   </div>
 </div>
@@ -535,17 +542,24 @@
 <script>
 (function() {
   const LOCATIONS = [
-    { name: "Washington D.C. & East Coast", lat: 38.9, lon: -77.0 },
-    { name: "Honolulu, Hawaii",             lat: 21.3, lon: -157.8 },
-    { name: "Caracas, Venezuela",           lat: 10.5, lon: -66.9 },
-    { name: "Paris, France",                lat: 48.9, lon: 2.3 },
-    { name: "Brussels, Belgium",            lat: 50.8, lon: 4.4 },
-    { name: "Berlin, Germany",              lat: 52.5, lon: 13.4 },
-    { name: "Geneva, Switzerland",          lat: 46.2, lon: 6.1 },
-    { name: "Tokyo, Japan",                 lat: 35.7, lon: 139.7 },
-    { name: "Kanazawa, Japan",              lat: 36.6, lon: 136.6 },
-    { name: "Beijing, China",               lat: 39.9, lon: 116.4 },
-    { name: "Bishkek, Kyrgyzstan",          lat: 42.9, lon: 74.6 },
+    { name: "Washington D.C.",   lat: 38.90, lon: -77.04 },
+    { name: "New York City",     lat: 40.71, lon: -74.01 },
+    { name: "Philadelphia, PA",  lat: 39.95, lon: -75.17 },
+    { name: "Annapolis, MD",     lat: 38.98, lon: -76.49 },
+    { name: "Trenton, NJ",       lat: 40.22, lon: -74.76 },
+    { name: "Harrisburg, PA",    lat: 40.27, lon: -76.88 },
+    { name: "Little Rock, AR",   lat: 34.75, lon: -92.29 },
+    { name: "Tallahassee, FL",   lat: 30.44, lon: -84.28 },
+    { name: "Honolulu, HI",      lat: 21.31, lon: -157.80 },
+    { name: "Caracas, Venezuela",lat: 10.50, lon: -66.90 },
+    { name: "Paris, France",     lat: 48.85, lon:   2.35 },
+    { name: "Brussels, Belgium", lat: 50.85, lon:   4.35 },
+    { name: "Berlin, Germany",   lat: 52.52, lon:  13.40 },
+    { name: "Geneva, Switzerland",lat:46.20, lon:   6.15 },
+    { name: "Bishkek, Kyrgyzstan",lat:42.87, lon:  74.59 },
+    { name: "Tokyo, Japan",      lat: 35.68, lon: 139.69 },
+    { name: "Kanazawa, Japan",   lat: 36.56, lon: 136.66 },
+    { name: "Beijing, China",    lat: 39.91, lon: 116.39 },
   ];
 
   const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
@@ -553,20 +567,36 @@
 
   const hint = document.getElementById('map-hint');
   let hintGone = false;
+  let activeLabel = null;
 
+  const svgEl = document.getElementById('world-svg');
   const svg = d3.select('#world-svg');
+  const mapG = d3.select('#map-g');
+
+  // Glow filter
   const defs = svg.append('defs');
-  const f = defs.append('filter').attr('id', 'dot-glow').attr('x', '-100%').attr('y', '-100%').attr('width', '300%').attr('height', '300%');
-  f.append('feGaussianBlur').attr('in', 'SourceGraphic').attr('stdDeviation', '2.5').attr('result', 'blur');
+  const f = defs.append('filter').attr('id', 'dot-glow').attr('x','-100%').attr('y','-100%').attr('width','300%').attr('height','300%');
+  f.append('feGaussianBlur').attr('in','SourceGraphic').attr('stdDeviation','2.5').attr('result','blur');
   const fm = f.append('feMerge');
-  fm.append('feMergeNode').attr('in', 'blur');
-  fm.append('feMergeNode').attr('in', 'SourceGraphic');
+  fm.append('feMergeNode').attr('in','blur');
+  fm.append('feMergeNode').attr('in','SourceGraphic');
+
+  // Zoom
+  const zoom = d3.zoom().scaleExtent([1, 8]).on('zoom', e => mapG.attr('transform', e.transform));
+  svg.call(zoom).on('dblclick.zoom', null);
+  document.getElementById('zoom-in').addEventListener('click',  () => svg.transition().duration(300).call(zoom.scaleBy, 1.6));
+  document.getElementById('zoom-out').addEventListener('click', () => svg.transition().duration(300).call(zoom.scaleBy, 1/1.6));
 
   const projection = d3.geoNaturalEarth1().scale(153).translate([480, 250]);
   const geoPath = d3.geoPath().projection(projection);
 
+  const fontSize   = isTouchDevice ? 13  : 11;
+  const labelH     = isTouchDevice ? 28  : 22;
+  const charW      = isTouchDevice ? 7.8 : 6.2;
+  const labelPad   = 10;
+
   d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
-    svg.append('g')
+    mapG.append('g')
       .selectAll('path')
       .data(topojson.feature(world, world.objects.countries).features)
       .join('path')
@@ -575,7 +605,7 @@
       .attr('stroke', 'rgba(255,255,255,0.18)')
       .attr('stroke-width', 0.4);
 
-    svg.append('path')
+    mapG.append('path')
       .datum(d3.geoGraticule()())
       .attr('d', geoPath)
       .attr('fill', 'none')
@@ -586,57 +616,59 @@
       const [x, y] = projection([loc.lon, loc.lat]);
       if (x == null || y == null) return;
 
-      const g = svg.append('g').style('cursor', 'pointer');
+      const g = mapG.append('g').style('cursor', 'pointer');
 
-      // Pulse ring
+      // Pulse
       const pulse = g.append('circle').attr('cx', x).attr('cy', y).attr('r', 5)
-        .attr('fill', 'none').attr('stroke', '#b8922a').attr('stroke-width', 1.5).attr('opacity', 0);
-
+        .attr('fill','none').attr('stroke','#b8922a').attr('stroke-width',1.5).attr('opacity',0);
       function doPulse() {
-        pulse.attr('r', 5).attr('opacity', 0.7)
+        pulse.attr('r',5).attr('opacity',0.7)
           .transition().duration(1800).ease(d3.easeLinear)
-          .attr('r', 16).attr('opacity', 0)
-          .on('end', () => setTimeout(doPulse, 800 + i * 250));
+          .attr('r',16).attr('opacity',0)
+          .on('end', () => setTimeout(doPulse, 800 + i * 200));
       }
-      setTimeout(doPulse, i * 250);
+      setTimeout(doPulse, i * 200);
 
-      // Glow halo
-      g.append('circle').attr('cx', x).attr('cy', y).attr('r', 7)
-        .attr('fill', 'rgba(184,146,42,0.2)').attr('filter', 'url(#dot-glow)');
+      // Halo + dot
+      g.append('circle').attr('cx',x).attr('cy',y).attr('r',7).attr('fill','rgba(184,146,42,0.2)').attr('filter','url(#dot-glow)');
+      g.append('circle').attr('cx',x).attr('cy',y).attr('r',4).attr('fill','#b8922a').attr('filter','url(#dot-glow)');
 
-      // Dot
-      g.append('circle').attr('cx', x).attr('cy', y).attr('r', 4)
-        .attr('fill', '#b8922a').attr('filter', 'url(#dot-glow)');
-
-      // Label — appears above or below depending on map position
-      const above = y > 280;
-      const labelPad = 10;
-      const labelH = 22;
-      const approxW = Math.max(loc.name.length * 6.2 + labelPad * 2, 80);
+      // Label
+      const above = y > 300;
+      const approxW = Math.max(loc.name.length * charW + labelPad * 2, 80);
       const labelY = above ? y - labelH - 10 : y + 10;
-      const labelTextY = above ? y - labelH - 10 + 15 : y + 10 + 15;
+      const textY  = labelY + labelH * 0.72;
 
-      const labelG = g.append('g').style('display', 'none').attr('pointer-events', 'none');
-      labelG.append('rect')
-        .attr('x', x - approxW / 2).attr('y', labelY)
-        .attr('width', approxW).attr('height', labelH)
-        .attr('fill', '#ede9df').attr('rx', 2)
-        .attr('stroke', '#d5cec0').attr('stroke-width', 0.5);
-      labelG.append('text')
-        .attr('x', x).attr('y', labelTextY)
-        .attr('text-anchor', 'middle')
-        .attr('font-family', 'EB Garamond, serif')
-        .attr('font-size', '11').attr('fill', '#162040')
-        .text(loc.name);
+      const labelG = g.append('g').attr('class','map-label-g').style('display','none').attr('pointer-events','none');
+      labelG.append('rect').attr('x', x - approxW/2).attr('y', labelY).attr('width', approxW).attr('height', labelH)
+        .attr('fill','#ede9df').attr('rx',2).attr('stroke','#d5cec0').attr('stroke-width',0.5);
+      labelG.append('text').attr('x',x).attr('y',textY)
+        .attr('text-anchor','middle').attr('font-family','EB Garamond, serif')
+        .attr('font-size', fontSize).attr('fill','#162040').text(loc.name);
 
       const showLabel = () => {
         if (!hintGone) { hint.style.opacity = '0'; hintGone = true; }
         labelG.style('display', null);
       };
       const hideLabel = () => labelG.style('display', 'none');
-      const toggleLabel = () => labelG.style('display') !== 'none' ? hideLabel() : showLabel();
 
-      g.on('mouseenter', showLabel).on('mouseleave', hideLabel).on('click', toggleLabel);
+      if (isTouchDevice) {
+        // Tap: show & stay; tap again or tap another to dismiss
+        g.on('click', () => {
+          if (!hintGone) { hint.style.opacity = '0'; hintGone = true; }
+          const isVisible = labelG.style('display') !== 'none';
+          if (activeLabel && activeLabel !== labelG) activeLabel.style('display', 'none');
+          if (isVisible) {
+            labelG.style('display', 'none');
+            activeLabel = null;
+          } else {
+            labelG.style('display', null);
+            activeLabel = labelG;
+          }
+        });
+      } else {
+        g.on('mouseenter', showLabel).on('mouseleave', hideLabel);
+      }
     });
   });
 })();
