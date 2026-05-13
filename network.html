@@ -545,6 +545,9 @@
     { name: "Tokyo, Japan",      lat: 35.68, lon: 139.69 },
     { name: "Kanazawa, Japan",   lat: 36.56, lon: 136.66 },
     { name: "Beijing, China",    lat: 39.91, lon: 116.39 },
+    { name: "Buenos Aires, Argentina", lat: -34.60, lon:  -58.38 },
+    { name: "Normandy, France",       lat:  49.30, lon:   -0.70 },
+    { name: "Tunis, Tunisia",          lat:  36.82, lon:   10.17 },
   ];
 
   const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
@@ -567,7 +570,17 @@
   fm.append('feMergeNode').attr('in','SourceGraphic');
 
   // Zoom
-  const zoom = d3.zoom().scaleExtent([1, 8]).on('zoom', e => mapG.attr('transform', e.transform));
+  const zoom = d3.zoom().scaleExtent([1, 8]).on('zoom', e => {
+    mapG.attr('transform', e.transform);
+    const k = e.transform.k;
+    mapG.selectAll('circle.main-dot').attr('r', 4 / k);
+    mapG.selectAll('circle.halo-dot').attr('r', 7 / k);
+    mapG.selectAll('.map-label-g').attr('transform', function() {
+      const lx = +this.getAttribute('data-x');
+      const ly = +this.getAttribute('data-y');
+      return 'translate(' + lx + ',' + ly + ') scale(' + (1/k) + ') translate(' + (-lx) + ',' + (-ly) + ')';
+    });
+  });
   svg.call(zoom).on('dblclick.zoom', null);
   document.getElementById('zoom-in').addEventListener('click',  () => svg.transition().duration(300).call(zoom.scaleBy, 1.6));
   document.getElementById('zoom-out').addEventListener('click', () => svg.transition().duration(300).call(zoom.scaleBy, 1/1.6));
@@ -624,7 +637,7 @@
       const labelY = above ? y - labelH - 10 : y + 10;
       const textY  = labelY + labelH * 0.72;
 
-      const labelG = g.append('g').attr('class','map-label-g').style('display','none').attr('pointer-events','none');
+      const labelG = g.append('g').attr('class','map-label-g').attr('data-x',x).attr('data-y',y).style('display','none').attr('pointer-events','none');
       labelG.append('rect').attr('x', x - approxW/2).attr('y', labelY).attr('width', approxW).attr('height', labelH)
         .attr('fill','#ede9df').attr('rx',2).attr('stroke','#d5cec0').attr('stroke-width',0.5);
       labelG.append('text').attr('x',x).attr('y',textY)
