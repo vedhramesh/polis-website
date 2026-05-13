@@ -581,7 +581,11 @@ const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersectin
     function closeSearch(){document.getElementById('search-overlay').style.display='none';document.getElementById('search-input').value='';}
     document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();openSearch();}if(e.key==='Escape')closeSearch();});
     document.getElementById('search-overlay').addEventListener('click',e=>{if(e.target===document.getElementById('search-overlay'))closeSearch();});
-    document.getElementById('search-input').addEventListener('input',e=>renderResults(e.target.value.trim().toLowerCase()));
+    let debounceTimer;
+    document.getElementById('search-input').addEventListener('input',e=>{
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => renderResults(e.target.value.trim().toLowerCase()), 80);
+    });
     function renderResults(q){
       const c=document.getElementById('search-results');
       const hits=q?SEARCH_DATA.filter(d=>d.title.toLowerCase().includes(q)||d.sub.toLowerCase().includes(q)||d.cat.toLowerCase().includes(q)):SEARCH_DATA.filter(d=>d.cat==='Pages');
