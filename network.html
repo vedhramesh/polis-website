@@ -505,6 +505,143 @@
   </div>
 </div>
 
+
+<!-- WORLD MAP -->
+<div class="fade-up" style="padding:80px 24px 96px;background:var(--navy);margin-top:0">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:44px">
+      <div style="display:flex;align-items:center;justify-content:center;gap:14px;font-family:var(--ff-body);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:16px">
+        <span style="display:block;width:44px;height:1px;background:var(--gold);opacity:.7"></span>
+        Global Reach
+        <span style="display:block;width:44px;height:1px;background:var(--gold);opacity:.7"></span>
+      </div>
+      <h2 style="font-family:var(--ff-serif);font-size:clamp(28px,4vw,44px);font-weight:400;color:#fff;line-height:1.2">Where in the world is <em style="font-style:italic;color:var(--gold)">POLIS?</em></h2>
+    </div>
+    <div style="position:relative">
+      <div id="map-hint" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none;transition:opacity .4s">
+        <div style="display:flex;align-items:center;gap:12px;font-family:var(--ff-body);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500">
+          <span style="display:block;width:32px;height:1px;background:var(--gold);opacity:.7"></span>
+          <span id="map-hint-text">Hover to explore</span>
+          <span style="display:block;width:32px;height:1px;background:var(--gold);opacity:.7"></span>
+        </div>
+      </div>
+      <svg id="world-svg" viewBox="0 0 960 500" style="width:100%;display:block"></svg>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+(function() {
+  const LOCATIONS = [
+    { name: "Washington D.C. & East Coast", lat: 38.9, lon: -77.0 },
+    { name: "Honolulu, Hawaii",             lat: 21.3, lon: -157.8 },
+    { name: "Caracas, Venezuela",           lat: 10.5, lon: -66.9 },
+    { name: "Paris, France",                lat: 48.9, lon: 2.3 },
+    { name: "Brussels, Belgium",            lat: 50.8, lon: 4.4 },
+    { name: "Berlin, Germany",              lat: 52.5, lon: 13.4 },
+    { name: "Geneva, Switzerland",          lat: 46.2, lon: 6.1 },
+    { name: "Tokyo, Japan",                 lat: 35.7, lon: 139.7 },
+    { name: "Kanazawa, Japan",              lat: 36.6, lon: 136.6 },
+    { name: "Beijing, China",               lat: 39.9, lon: 116.4 },
+    { name: "Bishkek, Kyrgyzstan",          lat: 42.9, lon: 74.6 },
+  ];
+
+  const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  document.getElementById('map-hint-text').textContent = isTouchDevice ? 'Tap to explore' : 'Hover to explore';
+
+  const hint = document.getElementById('map-hint');
+  let hintGone = false;
+
+  const svg = d3.select('#world-svg');
+  const defs = svg.append('defs');
+  const f = defs.append('filter').attr('id', 'dot-glow').attr('x', '-100%').attr('y', '-100%').attr('width', '300%').attr('height', '300%');
+  f.append('feGaussianBlur').attr('in', 'SourceGraphic').attr('stdDeviation', '2.5').attr('result', 'blur');
+  const fm = f.append('feMerge');
+  fm.append('feMergeNode').attr('in', 'blur');
+  fm.append('feMergeNode').attr('in', 'SourceGraphic');
+
+  const projection = d3.geoNaturalEarth1().scale(153).translate([480, 250]);
+  const geoPath = d3.geoPath().projection(projection);
+
+  d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
+    svg.append('g')
+      .selectAll('path')
+      .data(topojson.feature(world, world.objects.countries).features)
+      .join('path')
+      .attr('d', geoPath)
+      .attr('fill', 'rgba(255,255,255,0.07)')
+      .attr('stroke', 'rgba(255,255,255,0.18)')
+      .attr('stroke-width', 0.4);
+
+    svg.append('path')
+      .datum(d3.geoGraticule()())
+      .attr('d', geoPath)
+      .attr('fill', 'none')
+      .attr('stroke', 'rgba(255,255,255,0.04)')
+      .attr('stroke-width', 0.3);
+
+    LOCATIONS.forEach((loc, i) => {
+      const [x, y] = projection([loc.lon, loc.lat]);
+      if (x == null || y == null) return;
+
+      const g = svg.append('g').style('cursor', 'pointer');
+
+      // Pulse ring
+      const pulse = g.append('circle').attr('cx', x).attr('cy', y).attr('r', 5)
+        .attr('fill', 'none').attr('stroke', '#b8922a').attr('stroke-width', 1.5).attr('opacity', 0);
+
+      function doPulse() {
+        pulse.attr('r', 5).attr('opacity', 0.7)
+          .transition().duration(1800).ease(d3.easeLinear)
+          .attr('r', 16).attr('opacity', 0)
+          .on('end', () => setTimeout(doPulse, 800 + i * 250));
+      }
+      setTimeout(doPulse, i * 250);
+
+      // Glow halo
+      g.append('circle').attr('cx', x).attr('cy', y).attr('r', 7)
+        .attr('fill', 'rgba(184,146,42,0.2)').attr('filter', 'url(#dot-glow)');
+
+      // Dot
+      g.append('circle').attr('cx', x).attr('cy', y).attr('r', 4)
+        .attr('fill', '#b8922a').attr('filter', 'url(#dot-glow)');
+
+      // Label — appears above or below depending on map position
+      const above = y > 280;
+      const labelPad = 10;
+      const labelH = 22;
+      const approxW = Math.max(loc.name.length * 6.2 + labelPad * 2, 80);
+      const labelY = above ? y - labelH - 10 : y + 10;
+      const labelTextY = above ? y - labelH - 10 + 15 : y + 10 + 15;
+
+      const labelG = g.append('g').style('display', 'none').attr('pointer-events', 'none');
+      labelG.append('rect')
+        .attr('x', x - approxW / 2).attr('y', labelY)
+        .attr('width', approxW).attr('height', labelH)
+        .attr('fill', '#ede9df').attr('rx', 2)
+        .attr('stroke', '#d5cec0').attr('stroke-width', 0.5);
+      labelG.append('text')
+        .attr('x', x).attr('y', labelTextY)
+        .attr('text-anchor', 'middle')
+        .attr('font-family', 'EB Garamond, serif')
+        .attr('font-size', '11').attr('fill', '#162040')
+        .text(loc.name);
+
+      const showLabel = () => {
+        if (!hintGone) { hint.style.opacity = '0'; hintGone = true; }
+        labelG.style('display', null);
+      };
+      const hideLabel = () => labelG.style('display', 'none');
+      const toggleLabel = () => labelG.style('display') !== 'none' ? hideLabel() : showLabel();
+
+      g.on('mouseenter', showLabel).on('mouseleave', hideLabel).on('click', toggleLabel);
+    });
+  });
+})();
+</script>
+
 <!-- FOOTER -->
 <footer id="footer">
   <img src="logo.png" alt="POLIS" style="width:60px;height:60px;object-fit:contain;display:block;margin:0 auto 16px;" />
