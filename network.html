@@ -628,8 +628,8 @@
       setTimeout(doPulse, i * 200);
 
       // Halo + dot
-      g.append('circle').attr('cx',x).attr('cy',y).attr('r',7).attr('fill','rgba(184,146,42,0.2)').attr('filter','url(#dot-glow)');
-      g.append('circle').attr('cx',x).attr('cy',y).attr('r',4).attr('fill','#b8922a').attr('filter','url(#dot-glow)');
+      g.append('circle').attr('cx',x).attr('cy',y).attr('r',7).attr('class','halo-dot').attr('fill','rgba(184,146,42,0.2)').attr('filter','url(#dot-glow)');
+      g.append('circle').attr('cx',x).attr('cy',y).attr('r',4).attr('class','main-dot').attr('fill','#b8922a').attr('filter','url(#dot-glow)');
 
       // Label
       const above = y > 300;
