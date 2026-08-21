@@ -727,10 +727,10 @@ const obsEl = new IntersectionObserver(entries => entries.forEach(e => {
   const AGENCIES = [
     'Friedrich Ebert Stiftung',           'White House',
     'U.S. Dept. of State',               'U.S. Senate',
-    'McKinsey & Company',                 'Library of Congress',
+    'Société Générale',                   'Library of Congress',
     'U.S. House of Representatives',      'European Parliament',
     'United Nations',                     'Dept. of Health & Human Services',
-    'CIA',                               'U.S. Dept. of Treasury',
+    'University of Pennsylvania',        'U.S. Dept. of Treasury',
     'Foreign Policy Research Institute',  'Maryland General Assembly',
     'Ministry of Foreign Affairs, Japan', 'New Jersey State Senate',
     'Pennsylvania House of Reps.',        'New Jersey General Assembly',
@@ -743,13 +743,13 @@ const obsEl = new IntersectionObserver(entries => entries.forEach(e => {
     'logos/whitehouse.svg',    // White House
     'logos/state.svg',         // U.S. Dept. of State
     'logos/senate.svg',        // U.S. Senate
-    'logos/mckinsey.svg',      // McKinsey & Company
+    'logos/societe-generale.svg', // Société Générale
     'logos/loc.svg',           // Library of Congress
     'logos/house.svg',         // U.S. House of Representatives
     'logos/europarl.svg',      // European Parliament
     'logos/un.svg',            // United Nations
     'logos/hhs.svg',           // Dept. of Health & Human Services
-    'logos/cia.svg',           // CIA
+    'logos/upenn.svg',         // University of Pennsylvania
     'logos/treasury.svg',      // U.S. Dept. of Treasury
     '',                        // Foreign Policy Research Institute - no SVG available
     'logos/maryland.svg',      // Maryland General Assembly
@@ -819,7 +819,7 @@ const obsEl = new IntersectionObserver(entries => entries.forEach(e => {
 
   const STOP = /^(of|and|the|for|de|&)$/i;
   const initials = name => name
-    .replace(/[^A-Za-z ]/g, ' ')
+    .replace(/[^\p{L} ]/gu, ' ')
     .split(/\s+/)
     .filter(w => w && !STOP.test(w))
     .map(w => w[0].toUpperCase())
