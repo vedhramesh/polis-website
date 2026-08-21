@@ -349,6 +349,19 @@
       box-shadow: 0 0 0 5px rgba(184,146,42,.1), 0 10px 30px rgba(184,146,42,.2);
     }
 
+    .logo-fallback {
+      font-family: var(--ff-serif);
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      color: var(--navy);
+      opacity: .5;
+      line-height: 1;
+      text-transform: none;
+      user-select: none;
+    }
+    .logo-item:hover .logo-fallback { opacity: 1; color: var(--gold); }
+
     /* Stats */
     #stats {
       margin-top: 72px;
@@ -828,9 +841,9 @@
       <!-- Original set -->
       <div class="logo-item" data-name="U.S. Department of State"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/8/81/U.S._Department_of_State_official_seal.svg" alt="U.S. Department of State" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
       <div class="logo-item" data-name="U.S. Senate"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Seal_of_the_United_States_Senate.svg" alt="U.S. Senate" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
-      <div class="logo-item" data-name="Central Intelligence Agency"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/2/25/Seal_of_the_Central_Intelligence_Agency.svg" alt="Central Intelligence Agency" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
+      <div class="logo-item" data-name="University of Pennsylvania"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Shield_of_the_University_of_Pennsylvania.svg" alt="University of Pennsylvania" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
       <div class="logo-item" data-name="White House"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/US-WhiteHouse-Logo.svg" alt="White House" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
-      <div class="logo-item" data-name="McKinsey & Company"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/1/16/McKinsey_Script_Mark_2019.svg" alt="McKinsey & Company" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
+      <div class="logo-item" data-name="Société Générale"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Logo-SG-Soci%C3%A9t%C3%A9-G%C3%A9n%C3%A9rale.svg" alt="Société Générale" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
       <div class="logo-item" data-name="United Nations"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/UN_emblem_blue.svg" alt="United Nations" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
       <div class="logo-item" data-name="U.S. House of Representatives"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Seal_of_the_United_States_House_of_Representatives.svg" alt="U.S. House of Representatives" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
       <div class="logo-item" data-name="European Parliament"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/European_Parliament_logo.svg" alt="European Parliament" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
@@ -839,9 +852,9 @@
       <!-- Duplicate set for seamless loop -->
       <div class="logo-item" data-name="U.S. Department of State"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/8/81/U.S._Department_of_State_official_seal.svg" alt="U.S. Department of State" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
       <div class="logo-item" data-name="U.S. Senate"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Seal_of_the_United_States_Senate.svg" alt="U.S. Senate" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
-      <div class="logo-item" data-name="Central Intelligence Agency"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/2/25/Seal_of_the_Central_Intelligence_Agency.svg" alt="Central Intelligence Agency" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
+      <div class="logo-item" data-name="University of Pennsylvania"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Shield_of_the_University_of_Pennsylvania.svg" alt="University of Pennsylvania" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
       <div class="logo-item" data-name="White House"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/US-WhiteHouse-Logo.svg" alt="White House" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
-      <div class="logo-item" data-name="McKinsey & Company"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/1/16/McKinsey_Script_Mark_2019.svg" alt="McKinsey & Company" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
+      <div class="logo-item" data-name="Société Générale"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Logo-SG-Soci%C3%A9t%C3%A9-G%C3%A9n%C3%A9rale.svg" alt="Société Générale" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
       <div class="logo-item" data-name="United Nations"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/UN_emblem_blue.svg" alt="United Nations" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
       <div class="logo-item" data-name="U.S. House of Representatives"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Seal_of_the_United_States_House_of_Representatives.svg" alt="U.S. House of Representatives" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
       <div class="logo-item" data-name="European Parliament"><div class="logo-circle" style="display:flex;align-items:center;justify-content:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/European_Parliament_logo.svg" alt="European Parliament" style="width:88%;height:88%;object-fit:contain;display:block;margin:auto;" /></div></div>
@@ -1194,7 +1207,7 @@
       {title:'U.S. Senate',sub:'Network',url:'network.html',cat:'Network'},
       {title:'CIA',sub:'Network',url:'network.html',cat:'Network'},
       {title:'White House',sub:'Network',url:'network.html',cat:'Network'},
-      {title:'McKinsey & Company',sub:'Network',url:'network.html',cat:'Network'},
+      {title:'Société Générale',sub:'Network',url:'network.html',cat:'Network'},
       {title:'United Nations',sub:'Network',url:'network.html',cat:'Network'},
       {title:'U.S. House of Representatives',sub:'Network',url:'network.html',cat:'Network'},
       {title:'European Parliament',sub:'Network',url:'network.html',cat:'Network'},
@@ -1227,6 +1240,29 @@
     menu.style.top = (document.getElementById('nav').offsetHeight + announceH) + 'px';
     }
   });
+</script>
+<script>
+(function () {
+  var STOP = /^(of|and|the|for|de|&)$/i;
+  function initials(n) {
+    return n.replace(/[^\p{L} ]/gu, ' ').split(/\s+/)
+      .filter(function (w) { return w && !STOP.test(w); })
+      .map(function (w) { return w[0].toUpperCase(); })
+      .slice(0, 4).join('');
+  }
+  function swap(img) {
+    var item = img.closest('.logo-item');
+    var name = (item && item.dataset.name) || img.alt || '';
+    var el = document.createElement('span');
+    el.className = 'logo-fallback';
+    el.textContent = initials(name);
+    img.replaceWith(el);
+  }
+  document.querySelectorAll('.logo-item img').forEach(function (img) {
+    img.addEventListener('error', function () { swap(img); });
+    if (img.complete && img.naturalWidth === 0) swap(img);
+  });
+})();
 </script>
 </body>
 </html>
