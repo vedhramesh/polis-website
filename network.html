@@ -714,8 +714,14 @@
   const announceBar = document.getElementById('announce');
   function positionNav() {
     const h = announceBar ? announceBar.offsetHeight : 0;
-    document.getElementById('nav').style.top = h + 'px';
-    document.body.style.paddingTop = (h + 66) + 'px';
+    const navEl = document.getElementById('nav');
+    if (window.innerWidth <= 768) {
+      navEl.style.top = h + 'px';
+      document.body.style.paddingTop = (h + 66) + 'px';
+    } else {
+      navEl.style.top = '';
+      document.body.style.paddingTop = '';
+    }
   }
   positionNav();
   window.addEventListener('resize', positionNav);
