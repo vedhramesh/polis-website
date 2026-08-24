@@ -658,6 +658,7 @@
 
       const showLabel = () => {
         if (!hintGone) { hint.style.opacity = '0'; hintGone = true; }
+        g.raise();
         labelG.style('display', null);
       };
       const hideLabel = () => labelG.style('display', 'none');
@@ -672,6 +673,7 @@
             labelG.style('display', 'none');
             activeLabel = null;
           } else {
+            g.raise();
             labelG.style('display', null);
             activeLabel = labelG;
           }
